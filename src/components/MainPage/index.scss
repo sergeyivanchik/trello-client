@@ -37,4 +37,16 @@
       }
     }
   }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 140px 40px 0 40px;
+  }
+
+  .create-button, .board {
+    margin-bottom: 40px;
+    margin-right: 60px;
+  }
 }

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 
 import logo from './icons/logo.svg';
+import CreateButton from './components/CreateButton';
+import Board from './components/Board';
 
 
 const MainPage = () => {
@@ -18,6 +20,13 @@ const MainPage = () => {
           onMouseOver={() => setMouseOverOnLogo(true)}
           onMouseLeave={()=> setMouseOverOnLogo(false)}
         />
+      </div>
+
+      <div className='main-page__content'>
+        <CreateButton />
+        <Board title='Example'/>
+        <Board title='Example1'/>
+        <Board title='Example2'/>
       </div>
     </div>
   );
