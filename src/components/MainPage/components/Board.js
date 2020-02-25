@@ -6,7 +6,7 @@ import './Board.scss';
 const Board = ({ title }) => {
   return (
     <div className='board'>
-      <h3>{title}</h3>
+      <h2>{title}</h2>
     </div>
   );
 };
