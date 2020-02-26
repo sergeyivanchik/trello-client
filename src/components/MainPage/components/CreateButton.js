@@ -6,14 +6,12 @@ import { Input } from 'antd';
 import closeIcon from './icons/close.svg';
 
 
-const CreateButton = () => {
+const CreateButton = ({ setBoardsList, boards }) => {
   const [click, setClick] = useState(false);
   const [closeButtonClick, setCloseButtonClick] = useState(false);
   const [text, setText] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
-
-
 
   useEffect(() => {
     if (closeButtonClick || cancelClick) {
@@ -37,6 +35,32 @@ const CreateButton = () => {
       setEmptyInput(true);
     } else {
       setEmptyInput(false);
+    };
+  };
+
+  const handleCreateClick = () => {
+    if (text) {
+      if (boards) {
+        let lastId = boards &&
+          boards.lenght &&
+          boards[boards.lenght - 1] &&
+          boards[boards.lenght - 1].id;
+
+        boards.push({
+          id: +lastId++,
+          title: text
+        });
+      } else {
+        boards.push({
+          id: 1,
+          title: text
+        });
+      };
+      setText('');
+      setBoardsList(Array.from(boards));
+      setCloseButtonClick(true);
+    } else {
+      setEmptyInput(true);
     };
   };
 
@@ -83,7 +107,7 @@ const CreateButton = () => {
 
                   <span
                     className='create-button__create'
-                    // onClick={() => setCancelClick(true)}
+                    onClick={handleCreateClick}
                   >
                     Create
                   </span>
