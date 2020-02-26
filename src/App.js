@@ -28,6 +28,7 @@ const App = () => {
           </div>
           <Switch>
             <Route exact path="/" component={MainPage}/>
+            <Route exact path="/board/:boardId" component={CurrentBoard}/>
           </Switch>
         </div>
       </Router>
