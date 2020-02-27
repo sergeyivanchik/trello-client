@@ -35,7 +35,7 @@ const CurrentBoard = props => {
           lists &&
           !!lists.length &&
           lists.map(elem =>
-            <List key={elem.id} data={elem}/>
+            <List key={elem.id} data={elem} boardId={boardId}/>
           )
         }
       </div>  
