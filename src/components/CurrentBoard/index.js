@@ -6,9 +6,11 @@ import boardList from '../../database/boards.json';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
+import allLists from '../../database/lists.json'
+
 
 const CurrentBoard = props => {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState(allLists);
 
   const { boardId } = props.match.params;
 
@@ -34,7 +36,7 @@ const CurrentBoard = props => {
         {
           lists &&
           !!lists.length &&
-          lists.map(elem =>
+          lists.map(elem => elem.boardId === +boardId &&
             <List key={elem.id} data={elem} boardId={boardId}/>
           )
         }
