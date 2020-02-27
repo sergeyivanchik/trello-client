@@ -4,6 +4,7 @@ import './index.scss';
 
 import boardList from '../MainPage/boards.json';
 import AddButton from './components/AddButton';
+import List from './components/List';
 
 
 const CurrentBoard = props => {
@@ -29,6 +30,14 @@ const CurrentBoard = props => {
 
       <div className='current-board__lists'>
         <AddButton setLists={setLists} lists={lists} boardId={boardId}/>
+
+        {
+          lists &&
+          !!lists.length &&
+          lists.map(elem =>
+            <List key={elem.id} data={elem}/>
+          )
+        }
       </div>  
     </div>
   );

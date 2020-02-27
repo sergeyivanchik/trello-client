@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './AddButton.scss';
 import { Input } from 'antd';
@@ -11,12 +11,21 @@ const AddButton = ({ setLists, lists, boardId }) => {
   const [close, setClose] = useState(false);
   const [text, setText] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
+  const [isRef, setIsRef] = useState(false);
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const onKeyPress = e => {
-      if (e.keyCode === 13) {
+      if (
+        e.keyCode === 13 &&
+        inputRef &&
+        inputRef.current &&
+        inputRef.current.props &&
+        inputRef.current.props.placeholder === 'add a list'
+      ) {
         if (lists && !!lists.length) {
-          if (text) {
+          if (text && !!text.length) {
             let listId = lists &&
               lists.length && lists[lists.length - 1] &&
               lists.length && lists[lists.length - 1].id;
@@ -30,11 +39,15 @@ const AddButton = ({ setLists, lists, boardId }) => {
             setEmptyInput(true);
           };
         } else {
-          lists.push({
-            boardId,
-            id: 1,
-            title: text
-          });
+          if (text && !!text.length) {
+            lists.push({
+              boardId,
+              id: 1,
+              title: text
+            });
+          } else {
+            setEmptyInput(true);
+          };
         };
         setLists(Array.from(lists));
         setText('');
@@ -78,8 +91,13 @@ const AddButton = ({ setLists, lists, boardId }) => {
                 size="large"
                 value={text}
                 onChange={handleChange}
-                onBlur={() => !text && setEmptyInput(true)}
+                onBlur={() => {
+                  setEmptyInput(false);
+                  setIsRef(false);
+                }}
+                onFocus={() => setIsRef(true)}
                 placeholder='add a list'
+                ref={isRef ? inputRef : null}
               />
 
               <img
@@ -93,7 +111,7 @@ const AddButton = ({ setLists, lists, boardId }) => {
 
               {
                 emptyInput &&
-                <span>Gime me a name!</span>
+                <span>Give me a name!</span>
               }
             </>
       }

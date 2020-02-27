@@ -23,5 +23,11 @@
 
   &__lists {
     margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+
+    .add-button_open, .add-button, .list {
+      margin-right: 40px;
+    }
   }
 }
