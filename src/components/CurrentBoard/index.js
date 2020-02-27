@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import './index.scss';
 
-import boardList from '../MainPage/boards.json';
+import boardList from '../../database/boards.json';
 import AddButton from './components/AddButton';
 import List from './components/List';
 

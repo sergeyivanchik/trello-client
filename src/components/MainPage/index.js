@@ -6,7 +6,7 @@ import './index.scss';
 import CreateButton from './components/CreateButton';
 import Board from './components/Board';
 
-import boards from './boards.json';
+import boards from '../../database/boards.json';
 
 
 const MainPage = () => {

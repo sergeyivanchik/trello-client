@@ -24,7 +24,6 @@ const List = ({ data, boardId }) => {
             tasks.push({
               id: taskId,
               boardId,
-              listId: data.id,
               title: text
             });
           }
@@ -32,7 +31,6 @@ const List = ({ data, boardId }) => {
           tasks.push({
             id: 1,
             boardId,
-            listId: data.id,
             title: text
           });
         }
