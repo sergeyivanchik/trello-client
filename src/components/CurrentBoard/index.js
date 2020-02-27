@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 
 import boardList from '../MainPage/boards.json';
+import AddButton from './components/AddButton';
 
 
 const CurrentBoard = props => {
@@ -23,6 +24,10 @@ const CurrentBoard = props => {
           {getBoardTitle()}
         </div>
       </div>
+
+      <div className='current-board__lists'>
+        <AddButton/>
+      </div>  
     </div>
   );
 };

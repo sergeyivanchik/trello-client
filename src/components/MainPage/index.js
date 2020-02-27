@@ -21,7 +21,7 @@ const MainPage = () => {
           boardsList &&
           boardsList.length &&
           boardsList.map(elem =>
-            <Link to={`/board/${elem.id}`}>
+            <Link to={`/board/${elem.id}`} key={elem.id}>
               <Board title={elem.title} key={elem.id}/>
             </Link>
           )
