@@ -31,8 +31,8 @@ const AddButton = ({ setLists, lists, boardId }) => {
               lists.length && lists[lists.length - 1].id;
             listId++;
             lists.push({
-              boardId,
               id: listId,
+              boardId: +boardId,
               title: text
             });
           } else {
@@ -41,8 +41,8 @@ const AddButton = ({ setLists, lists, boardId }) => {
         } else {
           if (text && !!text.length) {
             lists.push({
-              boardId,
               id: 1,
+              boardId: +boardId,
               title: text
             });
           } else {
