@@ -7,6 +7,8 @@ import AddButton from './components/AddButton';
 
 
 const CurrentBoard = props => {
+  const [lists, setLists] = useState([]);
+
   const { boardId } = props.match.params;
 
   const getBoardTitle = () => {
@@ -15,7 +17,7 @@ const CurrentBoard = props => {
       boardList.findIndex(elem => elem.id === +boardId);
 
     return index >= 0 ? boardList[index] && boardList[index].title : null;
-  }
+  };
 
   return (
     <div className='current-board'>
@@ -26,7 +28,7 @@ const CurrentBoard = props => {
       </div>
 
       <div className='current-board__lists'>
-        <AddButton/>
+        <AddButton setLists={setLists} lists={lists} boardId={boardId}/>
       </div>  
     </div>
   );
