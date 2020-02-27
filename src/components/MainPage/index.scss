@@ -1,0 +1,17 @@
+.main-page {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 80px 0 0 55px;
+  }
+
+  .create-button,  .board {
+    margin-bottom: 40px;
+    margin-right: 40px;
+  }
+ }
+ 

@@ -1,0 +1,19 @@
+.add-button {
+  display: inline-flex;
+  background-color: #0a2c74;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  cursor: pointer;
+  height: 100px;
+  padding: 10px 40px;
+  align-items: center;
+
+  &__title {
+    color: white;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  &_open {
+    background-color: white;
+  }
+}

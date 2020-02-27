@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-function App() {
+import './App.scss'
+
+import logo from './components/MainPage/icons/logo.svg';
+import MainPage from '../src/components/MainPage';
+import CurrentBoard from '../src/components/CurrentBoard';
+
+
+const App = () => {
+  const [mouseOverOnLogo, setMouseOverOnLogo] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Router>
+        <div className="router">
+          <div className="router__header">
+            <Link to={'/'}>
+              <img
+                src={logo}
+                alt='logo'
+                className={`router__logo ${mouseOverOnLogo ? 'router__logo_hover' : ''}`}
+                onMouseOver={() => setMouseOverOnLogo(true)}
+                onMouseLeave={()=> setMouseOverOnLogo(false)}
+              />
+            </Link>
+          </div>
+          <Switch>
+            <Route exact path="/" component={MainPage}/>
+            <Route exact path="/board/:boardId" component={CurrentBoard}/>
+          </Switch>
+        </div>
+      </Router>
+    </Fragment>
   );
 }
 
