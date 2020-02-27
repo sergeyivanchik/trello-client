@@ -5,10 +5,12 @@ import { Input } from 'antd';
 
 import Task from './Task';
 
+import allTasks from '../../../database/tasks.json'
+
 
 const List = ({ data, boardId }) => {
   const [text, setText] = useState('');
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(allTasks);
 
   useEffect(() => {
     const onKeyPress = e => {
@@ -23,14 +25,14 @@ const List = ({ data, boardId }) => {
 
             tasks.push({
               id: taskId,
-              boardId,
+              listId: data.id,
               title: text
             });
           }
         } else {
           tasks.push({
             id: 1,
-            boardId,
+            listId: data.id,
             title: text
           });
         }
@@ -61,7 +63,7 @@ const List = ({ data, boardId }) => {
       {
         tasks &&
         !!tasks.length &&
-        tasks.map(elem =>
+        tasks.map(elem => elem.listId === data.id &&
           <Task title={elem.title}/>
         )
       }
