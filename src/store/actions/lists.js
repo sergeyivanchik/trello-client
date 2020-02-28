@@ -4,7 +4,9 @@ import {
   GET_LISTS_SUCCESS,
   GET_LISTS_FAILURE,
   ADD_LIST_SUCCESS,
-  ADD_LIST_FAILURE
+  ADD_LIST_FAILURE,
+  GET_LISTS_BY_BOARD_SUCCESS,
+  GET_LISTS_BY_BOARD_FAILURE
 } from '../constants/lists.js';
 
 
@@ -26,6 +28,28 @@ export const getListsAsync = () => {
     }
     catch (error) {
       dispatch(getListsFailure(error))
+    }
+  }
+};
+
+export const getListsByBoardSuccess = lists => ({
+  type: GET_LISTS_BY_BOARD_SUCCESS,
+  payload: lists
+});
+
+export const getByBoardFailure = error => ({
+  type: GET_LISTS_BY_BOARD_FAILURE,
+  payload: error
+});
+
+export const getListsByBoardAsync = boardId => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`lists/${boardId}`);
+      dispatch(getListsByBoardSuccess(data))
+    }
+    catch (error) {
+      dispatch(getByBoardFailure(error))
     }
   }
 };
