@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from  'react-redux';
 
 import './AddButton.scss';
 import { Input } from 'antd';
 
 import closeIcon from '../../MainPage/components/icons/close.svg';
 
+import { addListSuccess } from '../../../store/actions/lists';
 
-const AddButton = ({ setLists, lists, boardId }) => {
+
+const AddButton = ({ lists, boardId }) => {
   const [click, setClick] = useState(false);
   const [close, setClose] = useState(false);
   const [text, setText] = useState('');
@@ -14,6 +17,7 @@ const AddButton = ({ setLists, lists, boardId }) => {
   const [isRef, setIsRef] = useState(false);
 
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onKeyPress = e => {
@@ -30,26 +34,25 @@ const AddButton = ({ setLists, lists, boardId }) => {
               lists.length && lists[lists.length - 1] &&
               lists.length && lists[lists.length - 1].id;
             listId++;
-            lists.push({
+            dispatch(addListSuccess({
               id: listId,
               boardId: +boardId,
               title: text
-            });
+            }));
           } else {
             setEmptyInput(true);
           };
         } else {
           if (text && !!text.length) {
-            lists.push({
+            dispatch(addListSuccess({
               id: 1,
               boardId: +boardId,
               title: text
-            });
+            }));
           } else {
             setEmptyInput(true);
           };
         };
-        setLists(Array.from(lists));
         setText('');
       };
     };

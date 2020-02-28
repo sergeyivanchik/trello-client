@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from  'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from  'react-redux';
 
 import './index.scss';
 
@@ -7,13 +7,18 @@ import AddButton from './components/AddButton';
 import List from './components/List';
 
 import allLists from '../../database/lists.json'
+import { getListsSuccess } from '../../store/actions/lists';
 
 
 const CurrentBoard = props => {
-  const [lists, setLists] = useState(allLists);
-
   const { boardId } = props.match.params;
   const boardList = useSelector(state => state.boards.allBoards);
+  const lists = useSelector(state => state.lists.allLists);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getListsSuccess(allLists))
+  }, []);
 
   const getBoardTitle = () => {
     const index = boardList &&
@@ -32,7 +37,7 @@ const CurrentBoard = props => {
       </div>
 
       <div className='current-board__lists'>
-        <AddButton setLists={setLists} lists={lists} boardId={boardId}/>
+        <AddButton lists={lists} boardId={boardId}/>
 
         {
           lists &&
