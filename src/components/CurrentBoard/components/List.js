@@ -48,8 +48,19 @@ const List = ({ data, boardId }) => {
     };
   });
 
+  const drop = e => {
+    e.preventDefault();
+
+    const data = e.dataTransfer.getData('transfer');
+    e.target.appendChild(document.getElementById(data));
+  };
+
+  const allowDrop = e => {
+    e.preventDefault();
+  }
+
   return (
-    <div className='list'>
+    <div className='list' onDrop={drop} onDragOver={allowDrop}>
       <div className='list-title'>
         {data.title}
       </div>
