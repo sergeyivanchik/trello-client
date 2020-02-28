@@ -6,18 +6,22 @@ import './index.scss';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
-import allLists from '../../database/lists.json'
+import allLists from '../../database/lists.json';
+import allTasks from '../../database/tasks.json';
 import { getListsSuccess } from '../../store/actions/lists';
+import { getTasksSuccess } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
   const { boardId } = props.match.params;
   const boardList = useSelector(state => state.boards.allBoards);
   const lists = useSelector(state => state.lists.allLists);
+  const tasks = useSelector(state => state.tasks.allTasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListsSuccess(allLists))
+    dispatch(getListsSuccess(allLists));
+    dispatch(getTasksSuccess(allTasks));
   }, []);
 
   const getBoardTitle = () => {
@@ -43,7 +47,7 @@ const CurrentBoard = props => {
           lists &&
           !!lists.length &&
           lists.map(elem => elem.boardId === +boardId &&
-            <List key={elem.id} data={elem} boardId={boardId}/>
+            <List key={elem.id} data={elem} boardId={boardId} tasks={tasks}/>
           )
         }
       </div>  

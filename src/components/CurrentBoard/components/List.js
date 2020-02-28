@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from  'react-redux';
 
 import './List.scss';
 import { Input } from 'antd';
 
 import Task from './Task';
 
-import allTasks from '../../../database/tasks.json'
+import { addTaskSuccess } from '../../../store/actions/tasks';
 
 
-const List = ({ data }) => {
+const List = ({ data, tasks }) => {
   const [text, setText] = useState('');
-  const [tasks, setTasks] = useState(allTasks);
+
+  const dispatch = useDispatch();
   
   useEffect(() => {
     const onKeyPress = e => {
@@ -23,20 +25,19 @@ const List = ({ data }) => {
               tasks[tasks.length - 1].id;
             taskId++;
 
-            tasks.push({
+            dispatch(addTaskSuccess({
               id: taskId,
               listId: data.id,
               title: text
-            });
+            }));
           }
         } else {
-          tasks.push({
+          dispatch(addTaskSuccess({
             id: 1,
             listId: data.id,
             title: text
-          });
+          }));
         }
-        setTasks(Array.from(tasks));
         setText('');
       };
     };
