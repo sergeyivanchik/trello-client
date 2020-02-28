@@ -7,8 +7,7 @@ import './index.scss';
 import CreateButton from './components/CreateButton';
 import Board from './components/Board';
 
-import boards from '../../database/boards.json';
-import { getBoardsSuccess } from '../../store/actions/boards';
+import { getBoardsAsync } from '../../store/actions/boards';
 
 
 const MainPage = () => {
@@ -16,7 +15,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBoardsSuccess(boards));
+    dispatch(getBoardsAsync());
   }, []);
 
   return (
@@ -26,7 +25,7 @@ const MainPage = () => {
 
         {
           allBoards &&
-          allBoards.length &&
+          !!allBoards.length &&
           allBoards.map(elem =>
             <Link to={`/board/${elem.id}`} key={elem.id}>
               <Board title={elem.title} key={elem.id}/>

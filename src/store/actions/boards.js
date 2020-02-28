@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import {
   GET_BOARDS_SUCCESS,
   GET_BOARDS_FAILURE,
@@ -15,6 +17,18 @@ export const getBoardsFailure = error => ({
   type: GET_BOARDS_FAILURE,
   payload: error
 });
+
+export const getBoardsAsync = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get('boards');
+      dispatch(getBoardsSuccess(data))
+    }
+    catch (error) {
+      dispatch(getBoardsFailure(error))
+    }
+  }
+};
 
 export const addBoardSuccess = board => ({
   type: ADD_BOARD_SUCCESS,
