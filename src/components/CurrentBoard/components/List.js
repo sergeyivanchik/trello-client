@@ -8,10 +8,10 @@ import Task from './Task';
 import allTasks from '../../../database/tasks.json'
 
 
-const List = ({ data, boardId }) => {
+const List = ({ data }) => {
   const [text, setText] = useState('');
   const [tasks, setTasks] = useState(allTasks);
-
+  
   useEffect(() => {
     const onKeyPress = e => {
       if (e.keyCode === 13) {
@@ -75,7 +75,7 @@ const List = ({ data, boardId }) => {
         tasks &&
         !!tasks.length &&
         tasks.map(elem => elem.listId === data.id &&
-          <Task title={elem.title}/>
+          <Task title={elem.title} key={elem.id}/>
         )
       }
     </div>

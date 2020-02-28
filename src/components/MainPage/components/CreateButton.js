@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from  'react-redux';
 
 import './CreateButton.scss';
 import { Input } from 'antd';
 
 import closeIcon from './icons/close.svg';
 
+import { addBoardSuccess } from '../../../store/actions/boards';
 
-const CreateButton = ({ setBoardsList, boards }) => {
+
+const CreateButton = ({ boards }) => {
   const [click, setClick] = useState(false);
   const [closeButtonClick, setCloseButtonClick] = useState(false);
   const [text, setText] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (closeButtonClick || cancelClick) {
@@ -42,22 +47,21 @@ const CreateButton = ({ setBoardsList, boards }) => {
     if (text) {
       if (boards) {
         let lastId = boards &&
-          boards.lenght &&
-          boards[boards.lenght - 1] &&
-          boards[boards.lenght - 1].id;
-
-        boards.push({
-          id: +lastId++,
+          boards.length &&
+          boards[boards.length - 1] &&
+          boards[boards.length - 1].id;
+        lastId++;
+        dispatch(addBoardSuccess({
+          id: lastId,
           title: text
-        });
+        }));
       } else {
-        boards.push({
+        dispatch(addBoardSuccess({
           id: 1,
           title: text
-        });
+        }));
       };
       setText('');
-      setBoardsList(Array.from(boards));
       setCloseButtonClick(true);
     } else {
       setEmptyInput(true);

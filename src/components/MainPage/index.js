@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss';
 
@@ -7,20 +8,26 @@ import CreateButton from './components/CreateButton';
 import Board from './components/Board';
 
 import boards from '../../database/boards.json';
+import { getBoardsSuccess } from '../../store/actions/boards';
 
 
 const MainPage = () => {
-  const [boardsList, setBoardsList] = useState(boards);
+  const allBoards = useSelector(state => state.boards.allBoards);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBoardsSuccess(boards));
+  }, []);
 
   return (
     <div className='main-page'>
       <div className='main-page__content'>
-        <CreateButton setBoardsList={setBoardsList} boards={boardsList}/>
+        <CreateButton boards={allBoards}/>
 
         {
-          boardsList &&
-          boardsList.length &&
-          boardsList.map(elem =>
+          allBoards &&
+          allBoards.length &&
+          allBoards.map(elem =>
             <Link to={`/board/${elem.id}`} key={elem.id}>
               <Board title={elem.title} key={elem.id}/>
             </Link>

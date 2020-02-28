@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from  'react-redux';
 
 import './index.scss';
 
-import boardList from '../../database/boards.json';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
@@ -13,6 +13,7 @@ const CurrentBoard = props => {
   const [lists, setLists] = useState(allLists);
 
   const { boardId } = props.match.params;
+  const boardList = useSelector(state => state.boards.allBoards);
 
   const getBoardTitle = () => {
     const index = boardList &&
