@@ -1,8 +1,8 @@
 import {
   GET_LISTS_SUCCESS,
   GET_LISTS_FAILURE,
-  ADD_LISTS_SUCCESS,
-  ADD_LISTS_FAILURE
+  ADD_LIST_SUCCESS,
+  ADD_LIST_FAILURE
 } from '../constants/lists.js';
 
 
@@ -16,12 +16,12 @@ export const getListsFailure = error => ({
   payload: error
 });
 
-export const addListsSuccess = board => ({
-  type: ADD_LISTS_SUCCESS,
+export const addListSuccess = board => ({
+  type: ADD_LIST_SUCCESS,
   payload: board
 });
 
-export const addListsFailure = error => ({
-  type: ADD_LISTS_FAILURE,
+export const addListFailure = error => ({
+  type: ADD_LIST_FAILURE,
   payload: error
 })

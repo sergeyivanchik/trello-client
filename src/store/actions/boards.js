@@ -1,8 +1,8 @@
 import {
   GET_BOARDS_SUCCESS,
   GET_BOARDS_FAILURE,
-  ADD_BOARDS_SUCCESS,
-  ADD_BOARDS_FAILURE
+  ADD_BOARD_SUCCESS,
+  ADD_BOARD_FAILURE
 } from '../constants/boards.js';
 
 
@@ -17,11 +17,11 @@ export const getBoardsFailure = error => ({
 });
 
 export const addBoardSuccess = board => ({
-  type: ADD_BOARDS_SUCCESS,
+  type: ADD_BOARD_SUCCESS,
   payload: board
 });
 
 export const addBoardFailure = error => ({
-  type: ADD_BOARDS_FAILURE,
+  type: ADD_BOARD_FAILURE,
   payload: error
 })

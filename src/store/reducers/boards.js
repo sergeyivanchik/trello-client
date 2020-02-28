@@ -1,8 +1,8 @@
 import {
   GET_BOARDS_SUCCESS,
   GET_BOARDS_FAILURE,
-  ADD_BOARDS_SUCCESS,
-  ADD_BOARDS_FAILURE
+  ADD_BOARD_SUCCESS,
+  ADD_BOARD_FAILURE
 } from '../constants/boards.js';
 
 
@@ -19,10 +19,10 @@ export default function boards(state = initialState, action) {
     case GET_BOARDS_FAILURE: 
       return { ...state, error: action.payload };
 
-    case ADD_BOARDS_SUCCESS:
+    case ADD_BOARD_SUCCESS:
       return { ...state, allBoards: [...state.allBoards, action.payload] };
 
-    case ADD_BOARDS_FAILURE: 
+    case ADD_BOARD_FAILURE: 
       return { ...state, error: action.payload };
       
     default:

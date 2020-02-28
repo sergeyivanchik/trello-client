@@ -1,8 +1,8 @@
 import {
   GET_LISTS_SUCCESS,
   GET_LISTS_FAILURE,
-  ADD_LISTS_SUCCESS,
-  ADD_LISTS_FAILURE
+  ADD_LIST_SUCCESS,
+  ADD_LIST_FAILURE
 } from '../constants/lists';
 
 
@@ -19,10 +19,10 @@ export default function lists(state = initialState, action) {
     case GET_LISTS_FAILURE: 
       return { ...state, error: action.payload };
 
-    case ADD_LISTS_SUCCESS:
+    case ADD_LIST_SUCCESS:
       return { ...state, allLists: [...state.allLists, action.payload] };
 
-    case ADD_LISTS_FAILURE: 
+    case ADD_LIST_FAILURE: 
       return { ...state, error: action.payload };
       
     default:
