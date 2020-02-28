@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import boards  from './boards.js';
+import boards from './boards';
+import lists from './lists';
 
 const allReducers = combineReducers ({
-  boards
+  boards,
+  lists
 });
 
 export default allReducers;
