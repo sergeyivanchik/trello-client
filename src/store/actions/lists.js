@@ -6,9 +6,9 @@ import {
 } from '../constants/lists.js';
 
 
-export const getListsSuccess = boards => ({
+export const getListsSuccess = lists => ({
   type: GET_LISTS_SUCCESS,
-  payload: boards
+  payload: lists
 });
 
 export const getListsFailure = error => ({
@@ -16,9 +16,9 @@ export const getListsFailure = error => ({
   payload: error
 });
 
-export const addListSuccess = board => ({
+export const addListSuccess = list => ({
   type: ADD_LIST_SUCCESS,
-  payload: board
+  payload: list
 });
 
 export const addListFailure = error => ({
