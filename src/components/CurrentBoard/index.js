@@ -6,9 +6,8 @@ import './index.scss';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
-import allLists from '../../database/lists.json';
 import allTasks from '../../database/tasks.json';
-import { getListsSuccess } from '../../store/actions/lists';
+import { getListsAsync } from '../../store/actions/lists';
 import { getTasksSuccess } from '../../store/actions/tasks';
 
 
@@ -20,7 +19,7 @@ const CurrentBoard = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListsSuccess(allLists));
+    dispatch(getListsAsync());
     dispatch(getTasksSuccess(allTasks));
   }, []);
 
