@@ -38,4 +38,18 @@ export const addBoardSuccess = board => ({
 export const addBoardFailure = error => ({
   type: ADD_BOARD_FAILURE,
   payload: error
-})
+});
+
+export const addBoardAsync = title => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`boards`, 
+        { title }
+      );
+      dispatch(addBoardSuccess(data));
+    }
+    catch (error) {
+      dispatch(addBoardFailure(error));
+    }
+  }
+}

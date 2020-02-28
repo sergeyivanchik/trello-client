@@ -6,7 +6,7 @@ import { Input } from 'antd';
 
 import closeIcon from './icons/close.svg';
 
-import { addBoardSuccess } from '../../../store/actions/boards';
+import { addBoardAsync } from '../../../store/actions/boards';
 
 
 const CreateButton = ({ boards }) => {
@@ -46,20 +46,9 @@ const CreateButton = ({ boards }) => {
   const handleCreateClick = () => {
     if (text) {
       if (boards) {
-        let lastId = boards &&
-          boards.length &&
-          boards[boards.length - 1] &&
-          boards[boards.length - 1].id;
-        lastId++;
-        dispatch(addBoardSuccess({
-          id: lastId,
-          title: text
-        }));
+        dispatch(addBoardAsync(text));
       } else {
-        dispatch(addBoardSuccess({
-          id: 1,
-          title: text
-        }));
+        dispatch(addBoardAsync(text));
       };
       setText('');
       setCloseButtonClick(true);
