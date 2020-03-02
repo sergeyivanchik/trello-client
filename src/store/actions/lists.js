@@ -62,4 +62,16 @@ export const addListSuccess = list => ({
 export const addListFailure = error => ({
   type: ADD_LIST_FAILURE,
   payload: error
-})
+});
+
+export const addListAsync = list => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`lists`, list);
+      dispatch(addListSuccess(data))
+    }
+    catch (error) {
+      dispatch(addListFailure(error))
+    }
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from  'react-redux';
 
 import './index.scss';
@@ -13,6 +13,8 @@ import { getTasksSuccess } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
+  const [isAddList, setIsAddList] = useState(true);
+
   const { boardId } = props.match.params;
   const boardById = useSelector(state => state.boards.boardById);
   const listsByBoard = useSelector(state => state.lists.listsByBoard);
@@ -20,10 +22,13 @@ const CurrentBoard = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListsByBoardAsync(boardId));
-    dispatch(getTasksSuccess(allTasks));
-    dispatch(getBoardByIdAsync(boardId));
-  }, [boardId]);
+    if (isAddList) {
+      dispatch(getListsByBoardAsync(boardId));
+      dispatch(getTasksSuccess(allTasks));
+      dispatch(getBoardByIdAsync(boardId));
+    };
+    setIsAddList(false);
+  }, [boardId, isAddList]);
 
   return (
     <div className='current-board'>
@@ -36,7 +41,7 @@ const CurrentBoard = props => {
       </div>
 
       <div className='current-board__lists'>
-        <AddButton boardId={boardId}/>
+        <AddButton boardId={boardId} setIsAddList={setIsAddList}/>
 
         {
           listsByBoard &&

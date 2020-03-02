@@ -23,7 +23,7 @@ export default function lists(state = initialState, action) {
       return { ...state, error: action.payload };
 
     case ADD_LIST_SUCCESS:
-      return { ...state, allLists: [...state.allLists, action.payload] };
+      return { ...state, listsByBoard: [...state.listsByBoard, action.payload] };
 
     case ADD_LIST_FAILURE: 
       return { ...state, error: action.payload };
