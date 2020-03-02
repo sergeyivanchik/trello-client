@@ -63,7 +63,7 @@ const List = ({ data, tasks }) => {
   return (
     <div className='list' onDrop={drop} onDragOver={allowDrop}>
       <div className='list-title'>
-        {data.title}
+        {data && data.title}
       </div>
       <Input
         size="large"

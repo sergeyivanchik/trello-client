@@ -8,22 +8,22 @@ import List from './components/List';
 
 import allTasks from '../../database/tasks.json';
 import { getBoardByIdAsync } from '../../store/actions/boards';
-import { getListsAsync } from '../../store/actions/lists';
+import { getListsByBoardAsync } from '../../store/actions/lists';
 import { getTasksSuccess } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
   const { boardId } = props.match.params;
   const boardById = useSelector(state => state.boards.boardById);
-  const lists = useSelector(state => state.lists.allLists);
+  const listsByBoard = useSelector(state => state.lists.listsByBoard);
   const tasks = useSelector(state => state.tasks.allTasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListsAsync());
+    dispatch(getListsByBoardAsync(boardId));
     dispatch(getTasksSuccess(allTasks));
     dispatch(getBoardByIdAsync(boardId));
-  }, []);
+  }, [boardId]);
 
   return (
     <div className='current-board'>
@@ -36,12 +36,12 @@ const CurrentBoard = props => {
       </div>
 
       <div className='current-board__lists'>
-        <AddButton lists={lists} boardId={boardId}/>
+        <AddButton boardId={boardId}/>
 
         {
-          lists &&
-          !!lists.length &&
-          lists.map(elem => elem.boardId === +boardId &&
+          listsByBoard &&
+          !!listsByBoard.length &&
+          listsByBoard.map(elem =>
             <List key={elem.id} data={elem} boardId={boardId} tasks={tasks}/>
           )
         }

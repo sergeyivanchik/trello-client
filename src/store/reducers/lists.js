@@ -29,7 +29,7 @@ export default function lists(state = initialState, action) {
       return { ...state, error: action.payload };
 
     case GET_LISTS_BY_BOARD_SUCCESS:
-      return { ...state, listsByBoard: [...state.listsByBoard, action.payload] };
+      return { ...state, listsByBoard: action.payload };
 
     case GET_LISTS_BY_BOARD_FAILURE: 
       return { ...state, error: action.payload };

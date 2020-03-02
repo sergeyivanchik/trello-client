@@ -37,7 +37,7 @@ export const getListsByBoardSuccess = lists => ({
   payload: lists
 });
 
-export const getByBoardFailure = error => ({
+export const getListsByBoardFailure = error => ({
   type: GET_LISTS_BY_BOARD_FAILURE,
   payload: error
 });
@@ -49,7 +49,7 @@ export const getListsByBoardAsync = boardId => {
       dispatch(getListsByBoardSuccess(data))
     }
     catch (error) {
-      dispatch(getByBoardFailure(error))
+      dispatch(getListsByBoardFailure(error))
     }
   }
 };
