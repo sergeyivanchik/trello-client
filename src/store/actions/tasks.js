@@ -6,7 +6,9 @@ import {
   ADD_TASK_SUCCESS,
   ADD_TASK_FAILURE,
   GET_TASKS_BY_LIST_SUCCESS,
-  GET_TASKS_BY_LIST_FAILURE
+  GET_TASKS_BY_LIST_FAILURE,
+  CHANGE_TASK_SUCCESS,
+  CHANGE_TASK_FAILURE
 } from '../constants/tasks';
 
 
@@ -72,6 +74,27 @@ export const getTasksByListAsync = listId => {
     }
     catch (error) {
       dispatch(getTasksByListFailure(error))
+    }
+  }
+};
+
+export const changeTaskSuccess = () => ({
+  type: CHANGE_TASK_SUCCESS
+});
+
+export const changeTaskFailure = error => ({
+  type: CHANGE_TASK_FAILURE,
+  payload: error
+});
+
+export const changeTaskAsync = (id, body) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`tasks/${id}`, body);
+      dispatch(changeTaskSuccess());
+    }
+    catch (error) {
+      dispatch(changeTaskFailure(error))
     }
   }
 };
