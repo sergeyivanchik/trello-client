@@ -21,4 +21,8 @@
     text-decoration: line-through;
     background-color: rgb(222, 202, 255);
   }
+
+  &__switcher {
+    cursor: pointer;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from  'react-redux';
 
 import './index.scss';
@@ -6,47 +6,57 @@ import './index.scss';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
-import allTasks from '../../database/tasks.json';
-import { getListsAsync } from '../../store/actions/lists';
-import { getTasksSuccess } from '../../store/actions/tasks';
+import { getBoardByIdAsync } from '../../store/actions/boards';
+import { getListsByBoardAsync } from '../../store/actions/lists';
+import { getTasksAsync } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
+  const [isAddList, setIsAddList] = useState(true);
+  const [isChangeTask, setIsChangeTask] = useState(false);
+
   const { boardId } = props.match.params;
-  const boardList = useSelector(state => state.boards.allBoards);
-  const lists = useSelector(state => state.lists.allLists);
+  const boardById = useSelector(state => state.boards.boardById);
+  const listsByBoard = useSelector(state => state.lists.listsByBoard);
   const tasks = useSelector(state => state.tasks.allTasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getListsAsync());
-    dispatch(getTasksSuccess(allTasks));
-  }, []);
+    if (isAddList) {
+      dispatch(getListsByBoardAsync(boardId));
+      dispatch(getTasksAsync());
+      dispatch(getBoardByIdAsync(boardId));
+    };
+    setIsAddList(false);
+  }, [boardId, isAddList]);
 
-  const getBoardTitle = () => {
-    const index = boardList &&
-      boardList.length &&
-      boardList.findIndex(elem => elem.id === +boardId);
-
-    return index >= 0 ? boardList[index] && boardList[index].title : null;
-  };
+  useEffect(() => {
+    dispatch(getTasksAsync());
+  }, [isChangeTask]);
 
   return (
     <div className='current-board'>
       <div className='current-board__title'>
         <div>
-          {getBoardTitle()}
+          {
+            boardById && boardById.title
+          }
         </div>
       </div>
 
       <div className='current-board__lists'>
-        <AddButton lists={lists} boardId={boardId}/>
+        <AddButton boardId={boardId} setIsAddList={setIsAddList}/>
 
         {
-          lists &&
-          !!lists.length &&
-          lists.map(elem => elem.boardId === +boardId &&
-            <List key={elem.id} data={elem} boardId={boardId} tasks={tasks}/>
+          listsByBoard &&
+          !!listsByBoard.length &&
+          listsByBoard.map(elem =>
+            <List
+              key={elem.id}
+              data={elem}
+              tasks={tasks}
+              setIsChangeTask={setIsChangeTask}
+            />
           )
         }
       </div>  

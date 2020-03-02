@@ -6,10 +6,10 @@ import { Input } from 'antd';
 
 import closeIcon from '../../MainPage/components/icons/close.svg';
 
-import { addListSuccess } from '../../../store/actions/lists';
+import { addListAsync } from '../../../store/actions/lists';
 
 
-const AddButton = ({ lists, boardId }) => {
+const AddButton = ({ boardId, setIsAddList }) => {
   const [click, setClick] = useState(false);
   const [close, setClose] = useState(false);
   const [text, setText] = useState('');
@@ -28,31 +28,10 @@ const AddButton = ({ lists, boardId }) => {
         inputRef.current.props &&
         inputRef.current.props.placeholder === 'add a list'
       ) {
-        if (lists && !!lists.length) {
-          if (text && !!text.length) {
-            let listId = lists &&
-              lists.length && lists[lists.length - 1] &&
-              lists.length && lists[lists.length - 1].id;
-            listId++;
-            dispatch(addListSuccess({
-              id: listId,
-              boardId: +boardId,
-              title: text
-            }));
-          } else {
-            setEmptyInput(true);
-          };
-        } else {
-          if (text && !!text.length) {
-            dispatch(addListSuccess({
-              id: 1,
-              boardId: +boardId,
-              title: text
-            }));
-          } else {
-            setEmptyInput(true);
-          };
-        };
+        if (text && text.length) {
+          dispatch(addListAsync({ title: text, board: boardId }));
+          setIsAddList(true);
+        }
         setText('');
       };
     };

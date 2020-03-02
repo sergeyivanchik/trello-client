@@ -37,7 +37,7 @@ export const getListsByBoardSuccess = lists => ({
   payload: lists
 });
 
-export const getByBoardFailure = error => ({
+export const getListsByBoardFailure = error => ({
   type: GET_LISTS_BY_BOARD_FAILURE,
   payload: error
 });
@@ -49,7 +49,7 @@ export const getListsByBoardAsync = boardId => {
       dispatch(getListsByBoardSuccess(data))
     }
     catch (error) {
-      dispatch(getByBoardFailure(error))
+      dispatch(getListsByBoardFailure(error))
     }
   }
 };
@@ -62,4 +62,16 @@ export const addListSuccess = list => ({
 export const addListFailure = error => ({
   type: ADD_LIST_FAILURE,
   payload: error
-})
+});
+
+export const addListAsync = list => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`lists`, list);
+      dispatch(addListSuccess(data))
+    }
+    catch (error) {
+      dispatch(addListFailure(error))
+    }
+  }
+};
