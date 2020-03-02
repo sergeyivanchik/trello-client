@@ -75,8 +75,8 @@ const List = ({ data, tasks }) => {
       {
         tasks &&
         !!tasks.length &&
-        tasks.map(elem => elem.listId === data.id &&
-          <Task title={elem.title} key={elem.id}/>
+        tasks.map(elem => elem.list === data.id &&
+          <Task data={elem} key={elem.id}/>
         )
       }
     </div>

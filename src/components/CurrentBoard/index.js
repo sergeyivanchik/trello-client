@@ -6,10 +6,9 @@ import './index.scss';
 import AddButton from './components/AddButton';
 import List from './components/List';
 
-import allTasks from '../../database/tasks.json';
 import { getBoardByIdAsync } from '../../store/actions/boards';
 import { getListsByBoardAsync } from '../../store/actions/lists';
-import { getTasksSuccess } from '../../store/actions/tasks';
+import { getTasksAsync } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
@@ -24,7 +23,7 @@ const CurrentBoard = props => {
   useEffect(() => {
     if (isAddList) {
       dispatch(getListsByBoardAsync(boardId));
-      dispatch(getTasksSuccess(allTasks));
+      dispatch(getTasksAsync());
       dispatch(getBoardByIdAsync(boardId));
     };
     setIsAddList(false);

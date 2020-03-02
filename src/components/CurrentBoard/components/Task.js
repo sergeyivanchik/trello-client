@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './Task.scss';
 import { Popover } from 'antd';
 
 
-const Task = ({ title }) => {
+const Task = ({ data }) => {
   const [ready, setReady] = useState(false);
 
   const content = (
     <div>
-      {title}
+      {data && data.title}
   </div>
   );
 
@@ -23,14 +23,14 @@ const Task = ({ title }) => {
 
   return (
       <div
-        id={title}
+        id={data && data.title}
         className={`task ${ready ? 'task_ready' : ''}`}
         draggable='true'
         onDragStart={drag}
         onDragOver={noAllowDrop}
       >
         <Popover content={content} trigger="click">
-          <span>{title}</span>
+          <span>{data && data.title}</span>
         </Popover>
         <div onClick={() => setReady(!ready)}>	&#10003;</div>
       </div>
