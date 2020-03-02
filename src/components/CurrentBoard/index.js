@@ -7,13 +7,14 @@ import AddButton from './components/AddButton';
 import List from './components/List';
 
 import allTasks from '../../database/tasks.json';
+import { getBoardByIdAsync } from '../../store/actions/boards';
 import { getListsAsync } from '../../store/actions/lists';
 import { getTasksSuccess } from '../../store/actions/tasks';
 
 
 const CurrentBoard = props => {
   const { boardId } = props.match.params;
-  const boardList = useSelector(state => state.boards.allBoards);
+  const boardById = useSelector(state => state.boards.boardById);
   const lists = useSelector(state => state.lists.allLists);
   const tasks = useSelector(state => state.tasks.allTasks);
   const dispatch = useDispatch();
@@ -21,21 +22,16 @@ const CurrentBoard = props => {
   useEffect(() => {
     dispatch(getListsAsync());
     dispatch(getTasksSuccess(allTasks));
+    dispatch(getBoardByIdAsync(boardId));
   }, []);
-
-  const getBoardTitle = () => {
-    const index = boardList &&
-      boardList.length &&
-      boardList.findIndex(elem => elem.id === +boardId);
-
-    return index >= 0 ? boardList[index] && boardList[index].title : null;
-  };
 
   return (
     <div className='current-board'>
       <div className='current-board__title'>
         <div>
-          {getBoardTitle()}
+          {
+            boardById && boardById.title
+          }
         </div>
       </div>
 
