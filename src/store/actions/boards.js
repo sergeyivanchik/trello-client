@@ -4,7 +4,9 @@ import {
   GET_BOARDS_SUCCESS,
   GET_BOARDS_FAILURE,
   ADD_BOARD_SUCCESS,
-  ADD_BOARD_FAILURE
+  ADD_BOARD_FAILURE,
+  GET_BOARD_BY_ID_SUCCESS,
+  GET_BOARDS_BY_ID_FAILURE
 } from '../constants/boards.js';
 
 
@@ -52,4 +54,26 @@ export const addBoardAsync = title => {
       dispatch(addBoardFailure(error));
     }
   }
-}
+};
+
+export const getBoardByIdSuccess = board => ({
+  type: GET_BOARD_BY_ID_SUCCESS,
+  payload: board
+});
+
+export const getBoardByIdFailure = error => ({
+  type: GET_BOARDS_BY_ID_FAILURE,
+  payload: error
+});
+
+export const getBoardByIdAsync = boardId => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`boards/${boardId}`);
+      dispatch(getBoardByIdSuccess(data));
+    }
+    catch (error) {
+      dispatch(getBoardByIdFailure(error));
+    }
+  }
+};
