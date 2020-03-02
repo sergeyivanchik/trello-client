@@ -6,7 +6,7 @@ import { Input } from 'antd';
 
 import Task from './Task';
 
-import { addTaskSuccess } from '../../../store/actions/tasks';
+import { addTaskAsync } from '../../../store/actions/tasks';
 
 
 const List = ({ data, tasks }) => {
@@ -17,25 +17,11 @@ const List = ({ data, tasks }) => {
   useEffect(() => {
     const onKeyPress = e => {
       if (e.keyCode === 13) {
-        if (tasks && tasks.length) {
-          if (text && !!text.length) {
-            let taskId = tasks &&
-              tasks.length &&
-              tasks[tasks.length - 1] &&
-              tasks[tasks.length - 1].id;
-            taskId++;
-
-            dispatch(addTaskSuccess({
-              id: taskId,
-              listId: data.id,
-              title: text
-            }));
-          }
-        } else {
-          dispatch(addTaskSuccess({
-            id: 1,
-            listId: data.id,
-            title: text
+        if (text && !!text.length) {
+          dispatch(addTaskAsync({
+            title: text,
+            complete: false,
+            list: data && data.id
           }));
         }
         setText('');

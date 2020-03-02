@@ -28,8 +28,10 @@ const AddButton = ({ boardId, setIsAddList }) => {
         inputRef.current.props &&
         inputRef.current.props.placeholder === 'add a list'
       ) {
-        dispatch(addListAsync({ title: text, board: boardId }));
-        setIsAddList(true);
+        if (text && text.length) {
+          dispatch(addListAsync({ title: text, board: boardId }));
+          setIsAddList(true);
+        }
         setText('');
       };
     };

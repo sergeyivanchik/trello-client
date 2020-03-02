@@ -42,6 +42,18 @@ export const addTaskFailure = error => ({
   payload: error
 });
 
+export const addTaskAsync = task => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`tasks`, task);
+      dispatch(addTaskSuccess(data))
+    }
+    catch (error) {
+      dispatch(addTaskFailure(error))
+    }
+  }
+};
+
 export const getTasksByListSuccess = tasks => ({
   type: GET_TASKS_BY_LIST_SUCCESS,
   payload: tasks
