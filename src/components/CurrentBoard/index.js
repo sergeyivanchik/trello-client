@@ -13,6 +13,7 @@ import { getTasksAsync } from '../../store/actions/tasks';
 
 const CurrentBoard = props => {
   const [isAddList, setIsAddList] = useState(true);
+  const [isChangeTask, setIsChangeTask] = useState(false);
 
   const { boardId } = props.match.params;
   const boardById = useSelector(state => state.boards.boardById);
@@ -28,6 +29,10 @@ const CurrentBoard = props => {
     };
     setIsAddList(false);
   }, [boardId, isAddList]);
+
+  useEffect(() => {
+    dispatch(getTasksAsync());
+  }, [isChangeTask]);
 
   return (
     <div className='current-board'>
@@ -46,7 +51,12 @@ const CurrentBoard = props => {
           listsByBoard &&
           !!listsByBoard.length &&
           listsByBoard.map(elem =>
-            <List key={elem.id} data={elem} boardId={boardId} tasks={tasks}/>
+            <List
+              key={elem.id}
+              data={elem}
+              tasks={tasks}
+              setIsChangeTask={setIsChangeTask}
+            />
           )
         }
       </div>  

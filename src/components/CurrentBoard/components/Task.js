@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
 
 import './Task.scss';
 import { Popover } from 'antd';
 
+import { changeTaskAsync } from '../../../store/actions/tasks';
 
-const Task = ({ data }) => {
+
+const Task = ({ data, setIsChangeTask }) => {
   const [ready, setReady] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsChangeTask(ready);
+  }, [ready]);
 
   const content = (
     <div>
@@ -24,7 +33,7 @@ const Task = ({ data }) => {
   return (
       <div
         id={data && data.title}
-        className={`task ${ready ? 'task_ready' : ''}`}
+        className={`task ${data && data.complete ? 'task_ready' : ''}`}
         draggable='true'
         onDragStart={drag}
         onDragOver={noAllowDrop}
@@ -32,7 +41,15 @@ const Task = ({ data }) => {
         <Popover content={content} trigger="click">
           <span>{data && data.title}</span>
         </Popover>
-        <div onClick={() => setReady(!ready)}>	&#10003;</div>
+        <div
+          className='task__switcher'
+          onClick={() => {
+            setReady(!ready);
+            dispatch(changeTaskAsync(data && data.id, {complete: !ready}));
+          }}
+        >
+          &#10003;
+        </div>
       </div>
   );
 };

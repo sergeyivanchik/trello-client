@@ -9,7 +9,7 @@ import Task from './Task';
 import { addTaskAsync } from '../../../store/actions/tasks';
 
 
-const List = ({ data, tasks }) => {
+const List = ({ data, tasks, setIsChangeTask }) => {
   const [text, setText] = useState('');
 
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const List = ({ data, tasks }) => {
         tasks &&
         !!tasks.length &&
         tasks.map(elem => elem.list === data.id &&
-          <Task data={elem} key={elem.id}/>
+          <Task data={elem} key={elem.id} setIsChangeTask={setIsChangeTask}/>
         )
       }
     </div>
