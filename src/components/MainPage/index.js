@@ -29,9 +29,11 @@ const MainPage = () => {
       isLoading
         ? <Spinner/>
         : <div className='main-page'>
-            <div className='main-page__content'>
-              <CreateButton boards={allBoards}/>
+            <div className='main-page__title'>
+              Custom boards
+            </div>
 
+            <div className='main-page__content'>
               {
                 allBoards &&
                 !!allBoards.length &&
@@ -41,6 +43,8 @@ const MainPage = () => {
                   </Link>
                 )
               }
+
+              <CreateButton boards={allBoards}/>
             </div>
           </div>
     }
