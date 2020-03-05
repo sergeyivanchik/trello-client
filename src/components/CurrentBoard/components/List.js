@@ -46,13 +46,17 @@ const List = ({ data, tasks, setIsChangeTask }) => {
 
   const allowDrop = e => {
     e.preventDefault();
-  }
+  };
+
+  const currentTasks = tasks && tasks.length && tasks.findIndex(elem => elem.list === data.id);
 
   return (
     <div className='list' onDrop={drop} onDragOver={allowDrop}>
       <div className='list__title'>
         {data && data.title}
       </div>
+
+      <div className='list__tasks'>
       {
         tasks &&
         !!tasks.length &&
@@ -60,6 +64,7 @@ const List = ({ data, tasks, setIsChangeTask }) => {
           <Task data={elem} key={elem.id} setIsChangeTask={setIsChangeTask}/>
         )
       }
+      </div>
 
       {
         !isAddTask &&
@@ -68,8 +73,7 @@ const List = ({ data, tasks, setIsChangeTask }) => {
           onClick={() => setIsAddTask(true)}
         >
           {
-            tasks &&
-            tasks.length
+            currentTasks >= 0
               ? '+ Add another task'
               : '+ Add task'
           }
