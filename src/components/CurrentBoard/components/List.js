@@ -51,12 +51,12 @@ const List = ({ data, tasks, setIsChangeTask }) => {
   const currentTasks = tasks && tasks.length && tasks.findIndex(elem => elem.list === data.id);
 
   return (
-    <div className='list' onDrop={drop} onDragOver={allowDrop}>
+    <div className='list'>
       <div className='list__title'>
         {data && data.title}
       </div>
 
-      <div className='list__tasks'>
+      <div className='list__tasks' onDrop={drop} onDragOver={allowDrop}>
       {
         tasks &&
         !!tasks.length &&
