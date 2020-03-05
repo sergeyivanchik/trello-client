@@ -95,6 +95,19 @@ const AddButton = ({ boardId, setIsAddList }) => {
                 emptyInput &&
                 <span>Give me a name!</span>
               }
+
+              <div
+                className='add-button__add-list'
+                onClick={() => {
+                  if (text && text.length) {
+                    dispatch(addListAsync({ title: text, board: boardId }));
+                    setIsAddList(true);
+                  }
+                  setText('');
+                }}
+              >
+                Add a list
+              </div>
             </>
       }
     </div>
