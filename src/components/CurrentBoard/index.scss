@@ -23,6 +23,10 @@
 
   &__lists {
     margin-top: 80px;
+    display: flex;
+    overflow: auto;
+    width: calc(100vw - 115px);
+    height: calc(100vh - 240px);
 
     .add-button_open, .add-button, .list {
       margin-right: 40px;

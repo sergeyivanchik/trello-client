@@ -48,10 +48,22 @@ const List = ({ data, tasks, setIsChangeTask }) => {
     e.preventDefault();
   };
 
-  const currentTasks = tasks && tasks.length && tasks.findIndex(elem => elem.list === data.id);
+  const currentTasks = tasks &&
+    tasks.length &&
+    tasks.findIndex(elem => elem.list === data.id);
+  const countTasks = tasks &&
+    tasks.length &&
+    tasks.filter(elem => elem.list === data.id);
 
   return (
-    <div className='list'>
+    <div
+      className='list' 
+      style={{
+        height: countTasks && countTasks.length
+          ? 112 + countTasks.length * 62 + 'px'
+          : '112px'
+      }}
+    >
       <div className='list__title'>
         {data && data.title}
       </div>
@@ -89,7 +101,7 @@ const List = ({ data, tasks, setIsChangeTask }) => {
           onChange={e => setText(e.target.value)}
           autoFocus
           onBlur={() => setIsAddTask(false)}
-        /> 
+        />
       }
     </div>
   );
