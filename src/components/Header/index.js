@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from  'react-redux';
+import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss'
 
-import { logInAsync } from '../../store/actions/users';
+import { logInAsync, logOut } from '../../store/actions/users';
+import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
-const Header = () => {
-  const [click, setClick] = useState(false);
-
+const Header = ({ click, setClick }) => {
+  const user = useSelector(state => state.users.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,20 +28,29 @@ const Header = () => {
         <span
           className="header__login"
           onClick={() => {
-            dispatch(logInAsync(
-              {
-                username: 'exampleuser',
-                password: 'examplepassword'
-              }
-            ));
-            setClick(true);
+            if (!user) {
+              dispatch(logInAsync(
+                {
+                  username: 'exampleuser',
+                  password: 'examplepassword'
+                }
+              ));
+              setClick(true);
+            } else {
+              dispatch(logOut());
+              dispatch(getBoardsByUserSuccess([]));
+            }
           }}
         >
-          Log In
+          {
+            user ? 'Log Out' : 'Log In'
+          }
         </span>
 
         <div className="header__signup">
-          Sign Up
+          {
+            user ? user.username : 'Sign Up'
+          }
         </div>
       </div>
     </div>
