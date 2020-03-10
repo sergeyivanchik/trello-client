@@ -1,0 +1,83 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #9fe7a4;
+
+  &__title {
+    color: white;
+    font-family: 'Oleo Script', Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    margin: 10px 0 10px 10px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
+    }
+  }
+
+  &__auth {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  &__login {
+    color: white;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  &__signup {
+    background-color: white;
+    color: #9fe7a4;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
+    }
+  }
+
+  &__profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.popover {
+  color: #9fe7a4;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.ant-modal-body {
+  padding: 0;
+}
+
+.ant-modal-content {
+  width: 360px;
+}

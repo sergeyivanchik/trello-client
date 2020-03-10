@@ -45,8 +45,6 @@ const CurrentBoard = props => {
       </div>
 
       <div className='current-board__lists'>
-        <AddButton boardId={boardId} setIsAddList={setIsAddList}/>
-
         {
           listsByBoard &&
           !!listsByBoard.length &&
@@ -59,6 +57,8 @@ const CurrentBoard = props => {
             />
           )
         }
+
+        <AddButton boardId={boardId} setIsAddList={setIsAddList}/>
       </div>  
     </div>
   );

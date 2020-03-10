@@ -6,9 +6,33 @@ import {
   ADD_BOARD_SUCCESS,
   ADD_BOARD_FAILURE,
   GET_BOARD_BY_ID_SUCCESS,
-  GET_BOARDS_BY_ID_FAILURE
+  GET_BOARD_BY_ID_FAILURE,
+  GET_BOARDS_BY_USER_SUCCESS,
+  GET_BOARDS_BY_USER_FAILURE
 } from '../constants/boards.js';
 
+
+export const getBoardsByUserSuccess = boards => ({
+  type: GET_BOARDS_BY_USER_SUCCESS,
+  payload: boards
+});
+
+export const getBoardsByUserFailure = error => ({
+  type: GET_BOARDS_BY_USER_FAILURE,
+  payload: error
+});
+
+export const getBoardsByUserAsync = userId => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`boards/user/${userId}`);
+      dispatch(getBoardsByUserSuccess(data))
+    }
+    catch (error) {
+      dispatch(getBoardsByUserFailure(error))
+    }
+  }
+}
 
 export const getBoardsSuccess = boards => ({
   type: GET_BOARDS_SUCCESS,
@@ -62,7 +86,7 @@ export const getBoardByIdSuccess = board => ({
 });
 
 export const getBoardByIdFailure = error => ({
-  type: GET_BOARDS_BY_ID_FAILURE,
+  type: GET_BOARD_BY_ID_FAILURE,
   payload: error
 });
 

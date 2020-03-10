@@ -17,7 +17,7 @@
     background-color: white;
     padding: 20px 12px;
     height: 115px;
-    width: 293px;
+    min-width: 293px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -34,8 +34,8 @@
     img {
       position: relative;
       z-index: 100;
-      left: 160px;
-      top: -72px;
+      left: 149px;
+      top: -61px;
 
       &:hover {
         cursor: pointer;
@@ -45,6 +45,16 @@
     span {
       text-align: center;
       margin-top: -20px;
+    }
+  }
+
+  &__add-list {
+    color: #9fe7a4;
+    font-weight: bold;
+    width: 65px;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
