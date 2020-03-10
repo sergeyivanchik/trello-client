@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from  'react-redux';
+import { useDispatch } from  'react-redux';
 
 import './index.scss'
 
@@ -9,9 +9,9 @@ import { signUpAsync } from '../../store/actions/users';
 const SignupForm = ({ setVisible, visible }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
+  const [click, setClick] = useState(false);
 
-  const currentUser = useSelector(state => state.users.currentUser)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,12 +21,15 @@ const SignupForm = ({ setVisible, visible }) => {
   }, [visible]);
 
   useEffect(() => {
-    if (currentUser) setVisible(false)
-  }, [currentUser]);
+    if (click && username && password && email) {
+      setVisible(false);
+      setClick(false);
+    }
+  }, [click]);
 
   return (
-  <div class="signup">
-    <form class="signup__form">
+  <div className="signup">
+    <div className="signup__form">
       <input
         type="text"
         placeholder="username"
@@ -48,13 +51,14 @@ const SignupForm = ({ setVisible, visible }) => {
       <button
         onClick={() =>{
           if (username && password && email) {
-            dispatch(signUpAsync({ username, password, email }))
+            dispatch(signUpAsync({ username, password, email }));
+            setClick(true);
           }
         }}
       >
         create
       </button>
-    </form>
+    </div>
   </div>
   );
 }

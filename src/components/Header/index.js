@@ -6,13 +6,15 @@ import './index.scss'
 import { Popover, Modal } from 'antd';
 import userIcon from './icons/user.svg';
 import LoginForm from '../LoginForm';
+import SignupForm from '../SignupForm';
 
 import { logOut } from '../../store/actions/users';
 import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
 const Header = () => {
-  const [visible, setVisible] = useState(false);
+  const [visibleLogin, setVisibleLogin] = useState(false);
+  const [visibleSignup, setVisibleSignup] = useState(false);
 
   const user = useSelector(state => state.users.currentUser);
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ const Header = () => {
           className="header__login"
           onClick={() => {
             if (!user) {
-              setVisible(true);
+              setVisibleLogin(true);
             } else {
               dispatch(logOut());
               dispatch(getBoardsByUserSuccess([]));
@@ -50,7 +52,10 @@ const Header = () => {
 
         {
           !user
-            ? <div className="header__signup">
+            ? <div
+                className="header__signup"
+                onClick={() => setVisibleSignup(true)}
+              >
                 Sign Up
               </div>
             : <Popover content={popoverContent(user.username)} placement="left">
@@ -62,11 +67,19 @@ const Header = () => {
 
         <Modal
           closable={false}
-          onCancel={() => setVisible(false)}
+          onCancel={() => {
+            setVisibleLogin(false);
+            setVisibleSignup(false);
+          }}
           maskClosable={true}
-          footer={null} visible={visible}
+          footer={null}
+          visible={visibleLogin || visibleSignup}
         >
-          <LoginForm setVisible={setVisible} visible={visible}/>  
+          {
+            (visibleLogin && <LoginForm setVisible={setVisibleLogin} visible={visibleLogin}/>) ||
+            (visibleSignup && <SignupForm setVisible={setVisibleSignup} visible={visibleSignup}/>)
+          }
+            
         </Modal>
       </div>
     </div>
