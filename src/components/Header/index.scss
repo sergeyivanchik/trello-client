@@ -47,4 +47,29 @@
       transform: scale(1.03);
     }
   }
+
+  &__profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.popover {
+  color: #9fe7a4;
+  font-size: 18px;
+  font-weight: bold;
 }

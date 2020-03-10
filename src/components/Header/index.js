@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss'
+import { Popover } from 'antd';
+import userIcon from './icons/user.svg';
 
 import { logInAsync, logOut } from '../../store/actions/users';
 import { getBoardsByUserSuccess } from '../../store/actions/boards';
@@ -15,6 +17,12 @@ const Header = ({ click, setClick }) => {
   useEffect(() => {
     setClick(false);
   }, [click]);
+
+  const popoverContent = username => (
+    <div className='popover'>
+      {username}
+    </div>
+  )
 
   return (
     <div className="header">
@@ -47,11 +55,18 @@ const Header = ({ click, setClick }) => {
           }
         </span>
 
-        <div className="header__signup">
-          {
-            user ? user.username : 'Sign Up'
-          }
-        </div>
+        {
+          !user
+            ? <div className="header__signup">
+                Sign Up
+              </div>
+            : <Popover content={popoverContent(user.username)} placement="left">
+              <div className='header__profile'>
+                <img alt='profile' src={userIcon}/>
+              </div>
+              </Popover>
+
+        }
       </div>
     </div>
   );
