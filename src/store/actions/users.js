@@ -23,8 +23,8 @@ export const logOutFailure = error => ({
 export const logOut = () => {
   return (dispatch) => {
     try {
-      localStorage.clear();
       dispatch(logOutSuccess());
+      dispatch(logInSuccess(''));
     } catch (error) {
       dispatch(logOutFailure());
     }
@@ -44,6 +44,7 @@ export const checkAuthorizationFailure = error => ({
 export const checkAuthorizationAsync = () => {
   const token = localStorage.getItem('token');
   axios.defaults.headers['AUTHORIZATION'] = token;
+
   return async dispatch => {
     try {
       const currentUser  = await axios.post(`users/current`);
@@ -54,8 +55,9 @@ export const checkAuthorizationAsync = () => {
   };
 };
 
-export const logInSuccess = () => ({
-  type: LOG_IN_SUCCESS
+export const logInSuccess = username => ({
+  type: LOG_IN_SUCCESS,
+  payload: username
 });
 
 export const logInFailure = error => ({
@@ -67,11 +69,11 @@ export const logInAsync = userInfo => {
   return async dispatch => {
     try {
       const { data } = await axios.post(`users/login`, {...userInfo});
-      const { token } = data;
+      const { token, id, username } = data;
       if (token) {
         localStorage.setItem('token', token);
+        dispatch(logInSuccess({ id, username }));
       } else console.log('token not found');
-      dispatch(logInSuccess());
     } catch (error) {
       dispatch(logInFailure(error));
     };
