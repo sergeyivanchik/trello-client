@@ -11,7 +11,7 @@ import { logOut } from '../../store/actions/users';
 import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
-const Header = ({ click, setClick }) => {
+const Header = () => {
   const [visible, setVisible] = useState(false);
 
   const user = useSelector(state => state.users.currentUser);
@@ -66,7 +66,7 @@ const Header = ({ click, setClick }) => {
           maskClosable={true}
           footer={null} visible={visible}
         >
-          <LoginForm setVisible={setVisible}/>  
+          <LoginForm setVisible={setVisible} visible={visible}/>  
         </Modal>
       </div>
     </div>

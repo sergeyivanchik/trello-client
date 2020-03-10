@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.scss'
@@ -9,15 +9,13 @@ import Header from '../src/components/Header';
 
 
 const App = () => {
-  const [loginClick, setLoginClick] = useState(false);
-
   return (
     <Fragment>
       <Router>
         <div className="router">
-          <Header click={loginClick} setClick={setLoginClick}/>
+          <Header/>
           <Switch>
-            <Route exact path="/" render={() => <MainPage loginClick={loginClick}/>}/>
+            <Route exact path="/" component={MainPage}/>
             <Route exact path="/board/:boardId" component={CurrentBoard}/>
           </Switch>
         </div>

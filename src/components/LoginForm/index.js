@@ -6,12 +6,17 @@ import './index.scss'
 import { logInAsync } from '../../store/actions/users';
 
 
-const LoginForm = ({ setVisible }) => {
+const LoginForm = ({ setVisible, visible }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const currentUser = useSelector(state => state.users.currentUser)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setPassword('');
+    setUsername('');
+  }, [visible]);
 
   useEffect(() => {
     if (currentUser) setVisible(false)

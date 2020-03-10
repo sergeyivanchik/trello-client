@@ -10,7 +10,7 @@ import Board from './components/Board';
 import { getBoardsByUserAsync } from '../../store/actions/boards';
 
 
-const MainPage = ({ loginClick }) => {
+const MainPage = () => {
   const [userBoards, setUserBoards] = useState([]);
 
   const user = useSelector(state => state.users.currentUser);
@@ -20,7 +20,7 @@ const MainPage = ({ loginClick }) => {
   useEffect(() => {
     user && dispatch(getBoardsByUserAsync(user.id));
     setUserBoards(boards);
-  }, [user, loginClick, boards && boards.length]);
+  }, [user, boards && boards.length]);
 
   return (
     <div className='main-page'>
