@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch } from  'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss'
 
 import { logInAsync } from '../../store/actions/users';
 
 
-const LoginForm = () => {
+const LoginForm = ({ setVisible }) => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('');
 
+  const currentUser = useSelector(state => state.users.currentUser)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUser) setVisible(false)
+  }, [currentUser]);
 
   return (
     <div className="login">
@@ -32,8 +37,8 @@ const LoginForm = () => {
             if (username && password) {
               dispatch(logInAsync(
                 {
-                  username: 'exampleuser',
-                  password: 'examplepassword'
+                  username,
+                  password
                 }
               ));
             }

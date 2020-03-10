@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss'
-import { Popover } from 'antd';
+import { Popover, Modal } from 'antd';
 import userIcon from './icons/user.svg';
+import LoginForm from '../LoginForm';
 
-import { logInAsync, logOut } from '../../store/actions/users';
+import { logOut } from '../../store/actions/users';
 import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
 const Header = ({ click, setClick }) => {
+  const [visible, setVisible] = useState(false);
+
   const user = useSelector(state => state.users.currentUser);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setClick(false);
-  }, [click]);
 
   const popoverContent = username => (
     <div className='popover'>
@@ -37,13 +36,7 @@ const Header = ({ click, setClick }) => {
           className="header__login"
           onClick={() => {
             if (!user) {
-              dispatch(logInAsync(
-                {
-                  username: 'exampleuser',
-                  password: 'examplepassword'
-                }
-              ));
-              setClick(true);
+              setVisible(true);
             } else {
               dispatch(logOut());
               dispatch(getBoardsByUserSuccess([]));
@@ -65,8 +58,16 @@ const Header = ({ click, setClick }) => {
                 <img alt='profile' src={userIcon}/>
               </div>
               </Popover>
-
         }
+
+        <Modal
+          closable={false}
+          onCancel={() => setVisible(false)}
+          maskClosable={true}
+          footer={null} visible={visible}
+        >
+          <LoginForm setVisible={setVisible}/>  
+        </Modal>
       </div>
     </div>
   );
