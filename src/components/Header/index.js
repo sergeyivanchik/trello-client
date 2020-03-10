@@ -42,6 +42,7 @@ const Header = () => {
             } else {
               dispatch(logOut());
               dispatch(getBoardsByUserSuccess([]));
+              window.location = '/' 
             }
           }}
         >
