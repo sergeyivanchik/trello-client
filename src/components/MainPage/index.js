@@ -25,7 +25,11 @@ const MainPage = ({ loginClick }) => {
   return (
     <div className='main-page'>
         <div className='main-page__title'>
-          Custom boards
+          {
+            user
+              ? `${user.username.toUpperCase()} boards`
+              : 'Custom boards'
+          }
         </div>
 
         <div className='main-page__content'>
