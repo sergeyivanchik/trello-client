@@ -41,8 +41,6 @@ const Header = () => {
               setVisibleLogin(true);
             } else {
               dispatch(logOut());
-              dispatch(getBoardsByUserSuccess([]));
-              window.location = '/' 
             }
           }}
         >

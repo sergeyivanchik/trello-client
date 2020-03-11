@@ -1,4 +1,5 @@
 import axios from "axios";
+import { history } from '../../App';
 
 import {
   LOG_IN_SUCCESS,
@@ -26,9 +27,20 @@ export const logOutFailure = error => ({
 export const logOut = () => {
   return (dispatch) => {
     try {
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully logged out!'
+      }));
       dispatch(logOutSuccess());
+      history.push('/');
     } catch (error) {
       dispatch(logOutFailure());
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 };
@@ -87,7 +99,7 @@ export const logInAsync = userInfo => {
         type: 'error',
         message: 'Error',
         description: 'Please, enter correct data!'
-      }))
+      }));
     };
   }
 };
