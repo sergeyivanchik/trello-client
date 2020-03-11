@@ -24,7 +24,7 @@ export default function user(state = initialState, action) {
       return { ...state, error: action.payload };
 
     case LOG_OUT_SUCCESS:
-      return { ...state, error: '' };
+      return { ...state, currentUser: '' };
 
     case LOG_OUT_FAILURE: 
       return { ...state, error: action.payload };

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from  'react-redux';
 import './index.scss'
 
 import { logInAsync } from '../../store/actions/users';
+import { showSnackbar } from '../../store/actions/snackbar';
 
 
 const LoginForm = ({ setVisible, visible }) => {
@@ -67,7 +68,13 @@ const LoginForm = ({ setVisible, visible }) => {
                   password
                 }
               ));
-            }
+            } else {
+              dispatch(showSnackbar({
+                type: 'error',
+                message: 'Error',
+                description: 'Fill in all the fields!'
+              }))
+            };
           }}
         >
           login

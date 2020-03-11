@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -9,6 +10,8 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE
 } from '../constants/users.js';
+
+import { showSnackbar } from './snackbar';
 
 
 export const logOutSuccess = () => ({
@@ -24,7 +27,6 @@ export const logOut = () => {
   return (dispatch) => {
     try {
       dispatch(logOutSuccess());
-      dispatch(logInSuccess(''));
     } catch (error) {
       dispatch(logOutFailure());
     }
@@ -73,9 +75,19 @@ export const logInAsync = userInfo => {
       if (token) {
         localStorage.setItem('token', token);
         dispatch(logInSuccess({ id, username }));
+        dispatch(showSnackbar({
+          type: 'success',
+          message: 'Success',
+          description: 'You have successfully logged in!'
+        }));
       } else console.log('token not found');
     } catch (error) {
       dispatch(logInFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Please, enter correct data!'
+      }))
     };
   }
 };
