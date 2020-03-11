@@ -1,5 +1,4 @@
 import axios from "axios";
-import history from '../../history';
 
 import {
   LOG_IN_SUCCESS,
@@ -33,7 +32,6 @@ export const logOut = () => {
         description: 'You have successfully logged out!'
       }));
       dispatch(logOutSuccess());
-      history.push('/');
     } catch (error) {
       dispatch(logOutFailure());
       dispatch(showSnackbar({
@@ -83,10 +81,10 @@ export const logInAsync = userInfo => {
   return async dispatch => {
     try {
       const { data } = await axios.post(`users/login`, {...userInfo});
-      const { token, id, username } = data;
+      const { token, id, username, email } = data;
       if (token) {
         localStorage.setItem('token', token);
-        dispatch(logInSuccess({ id, username }));
+        dispatch(logInSuccess({ id, username, email }));
         dispatch(showSnackbar({
           type: 'success',
           message: 'Success',

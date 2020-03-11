@@ -9,7 +9,6 @@ import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
 
 import { logOut } from '../../store/actions/users';
-import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
 const Header = () => {
@@ -34,20 +33,23 @@ const Header = () => {
       </Link>
 
       <div className="header__auth">
-        <span
-          className="header__login"
-          onClick={() => {
-            if (!user) {
-              setVisibleLogin(true);
-            } else {
-              dispatch(logOut());
-            }
-          }}
-        >
-          {
-            user ? 'Log Out' : 'Log In'
-          }
-        </span>
+        {
+          user
+            ? <Link to={`/`}>
+                <span
+                  className="header__login"
+                  onClick={() => dispatch(logOut())}
+                >
+                Log Out
+                </span>
+              </Link>
+            : <span
+                className="header__login"
+                onClick={() => setVisibleLogin(true)}
+              >
+                Log In
+              </span>
+        }
 
         {
           !user
@@ -58,9 +60,11 @@ const Header = () => {
                 Sign Up
               </div>
             : <Popover content={popoverContent(user.username)} placement="left">
-              <div className='header__profile'>
-                <img alt='profile' src={userIcon}/>
-              </div>
+              <Link to={`${user.username}`}>
+                <div className='header__profile'>
+                  <img alt='profile' src={userIcon}/>
+                </div>
+              </Link>
               </Popover>
         }
 
