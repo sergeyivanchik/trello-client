@@ -15,6 +15,23 @@ const SignupForm = ({ setVisible, visible }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const onKeyPress = e => {
+      if (e.keyCode === 13) {
+        if (username && password && email) {
+          dispatch(signUpAsync({ username, password, email }));
+          setClick(true);
+        };
+      };
+    };
+
+    document.addEventListener('keypress', onKeyPress);
+  
+    return () => {
+      document.removeEventListener('keypress', onKeyPress);
+    };
+  });
+
+  useEffect(() => {
     setPassword('');
     setUsername('');
     setEmail('');

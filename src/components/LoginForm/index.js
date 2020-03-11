@@ -14,6 +14,27 @@ const LoginForm = ({ setVisible, visible }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const onKeyPress = e => {
+      if (e.keyCode === 13) {
+        if (username && password) {
+          dispatch(logInAsync(
+            {
+              username,
+              password
+            }
+          ));
+        };
+      };
+    };
+
+    document.addEventListener('keypress', onKeyPress);
+  
+    return () => {
+      document.removeEventListener('keypress', onKeyPress);
+    };
+  });
+
+  useEffect(() => {
     setPassword('');
     setUsername('');
   }, [visible]);
