@@ -119,9 +119,19 @@ export const signUpAsync = userInfo => {
       const { data } = await axios.post(`users/signup`, {...userInfo});
       if (data) {
         dispatch(signUpSuccess());
+        dispatch(showSnackbar({
+          type: 'success',
+          message: 'Success',
+          description: 'You have successfully signed up!'
+        }));
       } else console.log('SignUp error!');
     } catch (error) {
       dispatch(signUpFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 };

@@ -73,7 +73,7 @@ const LoginForm = ({ setVisible, visible }) => {
                 type: 'error',
                 message: 'Error',
                 description: 'Fill in all the fields!'
-              }))
+              }));
             };
           }}
         >

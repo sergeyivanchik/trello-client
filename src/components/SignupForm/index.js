@@ -4,6 +4,7 @@ import { useDispatch } from  'react-redux';
 import './index.scss'
 
 import { signUpAsync } from '../../store/actions/users';
+import { showSnackbar } from '../../store/actions/snackbar';
 
 
 const SignupForm = ({ setVisible, visible }) => {
@@ -70,10 +71,16 @@ const SignupForm = ({ setVisible, visible }) => {
           if (username && password && email) {
             dispatch(signUpAsync({ username, password, email }));
             setClick(true);
-          }
+          } else {
+            dispatch(showSnackbar({
+              type: 'error',
+              message: 'Error',
+              description: 'Fill in all the fields!'
+            }));
+          };
         }}
       >
-        create
+        sign up
       </button>
     </div>
   </div>
