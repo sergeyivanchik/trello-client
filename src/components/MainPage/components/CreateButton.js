@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from  'react-redux';
+import { useDispatch, useSelector } from  'react-redux';
 
 import './CreateButton.scss';
 import { Input } from 'antd';
@@ -16,6 +16,7 @@ const CreateButton = ({ boards }) => {
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
 
+  const currentUser = useSelector(state => state.users.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,8 +60,10 @@ const CreateButton = ({ boards }) => {
 
   return (
     <div
-      className={`create-button ${click ? 'create-button_open' : ''}`}
-      onClick={() => setClick(true)}
+      className={
+        `create-button ${click ? 'create-button_open' : ''} ${!currentUser ? 'create-button_inactive' : ''}`
+      }
+      onClick={() => currentUser && setClick(true)}
     >
       {
         !click
