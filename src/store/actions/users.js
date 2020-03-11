@@ -1,5 +1,5 @@
 import axios from "axios";
-import { history } from '../../App';
+import history from '../../history';
 
 import {
   LOG_IN_SUCCESS,

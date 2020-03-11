@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import createBrowseHistory from "history/createBrowserHistory";
 
 import './App.scss'
 
@@ -9,8 +8,6 @@ import MainPage from '../src/components/MainPage';
 import CurrentBoard from '../src/components/CurrentBoard';
 import Header from '../src/components/Header';
 import Snackbar from './components/Snackbar';
-
-export const history = createBrowseHistory();
 
 
 const App = () => {
