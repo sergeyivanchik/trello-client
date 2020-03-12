@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from  'react-redux';
 
 import './index.scss';
@@ -16,6 +16,8 @@ import { getTasksAsync } from '../../store/actions/tasks';
 
 
 const Profile = () => {
+  const [isDeleteTask, setIsDeleteTask] = useState(false);
+
   const userBoards = useSelector(state => state.boards.userBoards);
   const lists = useSelector(state => state.lists.allLists);
   const tasks = useSelector(state => state.tasks.allTasks);
@@ -33,7 +35,8 @@ const Profile = () => {
       dispatch(getListsAsync());
       dispatch(getTasksAsync());
     };
-  }, [dispatch, user_id]);
+    setIsDeleteTask(false);
+  }, [dispatch, user_id, isDeleteTask]);
 
   return (
     <div className='profile'>
@@ -54,7 +57,12 @@ const Profile = () => {
             <Lists lists={userLists} tasks={userTasks} boards={userBoards}/>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Tasks" key="3">
-            <Tasks tasks={userTasks} lists={userLists} boards={userBoards}/>
+            <Tasks
+              tasks={userTasks}
+              lists={userLists}
+              boards={userBoards}
+              setIsDeleteTask={setIsDeleteTask}
+            />
           </Tabs.TabPane>
         </Tabs>
       </div>

@@ -54,7 +54,10 @@ const Boards = ({ boards, lists, tasks }) => {
 
   return (
     <div className='boards'>
-      <Table columns={columns} dataSource={data}/>
+      <Table
+        columns={columns}
+        dataSource={data}
+        rowKey={record => record.title + record.boardId + record.tasksCount + record.listsCount}/>
     </div>
   );
 };

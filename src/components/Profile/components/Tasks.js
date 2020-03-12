@@ -9,7 +9,7 @@ import deleteIcon from '../icons/delete.svg';
 import { deleteTaskAsync } from '../../../store/actions/tasks';
 
 
-const Tasks = ({ tasks, lists, boards }) => {
+const Tasks = ({ tasks, lists, boards, setIsDeleteTask }) => {
   const dispatch = useDispatch();
 
   const data = [];
@@ -55,14 +55,21 @@ const Tasks = ({ tasks, lists, boards }) => {
           className='tasks__delete-icon'
           src={deleteIcon}
           alt='delete'
-          onClick={() => dispatch(deleteTaskAsync(id))}
+          onClick={() => {
+            setIsDeleteTask(true);
+            dispatch(deleteTaskAsync(id));
+          }}
         />,
     },
   ];
 
   return (
     <div className='tasks'>
-      <Table columns={columns} dataSource={data}/>
+      <Table
+        columns={columns}
+        dataSource={data}
+        rowKey={record => record.title + record.board + record.taskId + record.list}/>
+      />
     </div>
   );
 };
