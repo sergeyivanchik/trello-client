@@ -12,40 +12,45 @@ import { getBoardsByUserAsync } from '../../store/actions/boards';
 
 const MainPage = () => {
   const [userBoards, setUserBoards] = useState([]);
+  const [createClick, setCreateClick] = useState(false);
 
-  const user = useSelector(state => state.users.currentUser);
+  const userId = localStorage.getItem('user_id');
+  const username = localStorage.getItem('username');
+
   const boards = useSelector(state => state.boards.userBoards);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    user && dispatch(getBoardsByUserAsync(user.id));
-    setUserBoards(boards);
-  }, [user, boards && boards.length]);
+
+    userId && dispatch(getBoardsByUserAsync(userId));
+    setUserBoards(userId ? boards : []);
+    setCreateClick(false);
+  }, [userId, boards && boards.length, createClick]);
 
   return (
     <div className='main-page'>
-        <div className='main-page__title'>
-          {
-            user
-              ? `${user.username.toUpperCase()} boards`
-              : 'Custom boards'
-          }
-        </div>
-
-        <div className='main-page__content'>
-          {
-            userBoards &&
-            !!userBoards.length &&
-            userBoards.map(elem =>
-              <Link to={`/board/${elem.id}`} key={elem.id}>
-                <Board title={elem.title} key={elem.id}/>
-              </Link>
-            )
-          }
-
-          <CreateButton boards={userBoards}/>
-        </div>
+      <div className='main-page__title'>
+        {
+          userId
+            ? `${username.toUpperCase()} boards`
+            : 'Custom boards'
+        }
       </div>
+
+      <div className='main-page__content'>
+        {
+          userBoards &&
+          !!userBoards.length &&
+          userBoards.map(elem =>
+            <Link to={`/board/${elem.id}`} key={elem.id}>
+              <Board title={elem.title} key={elem.id}/>
+            </Link>
+          )
+        }
+
+        <CreateButton boards={userBoards} setCreateClick={setCreateClick}/>
+      </div>
+    </div>
   );
 };
 

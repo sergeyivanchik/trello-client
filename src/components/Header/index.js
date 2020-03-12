@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from  'react-redux';
+import { useDispatch } from  'react-redux';
 
 import './index.scss'
 import { Popover, Modal } from 'antd';
@@ -15,7 +15,8 @@ const Header = () => {
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleSignup, setVisibleSignup] = useState(false);
 
-  const user = useSelector(state => state.users.currentUser);
+  const username = localStorage.getItem('username');
+
   const dispatch = useDispatch();
 
   const popoverContent = username => (
@@ -34,7 +35,7 @@ const Header = () => {
 
       <div className="header__auth">
         {
-          user
+          username
             ? <Link to={`/`}>
                 <span
                   className="header__login"
@@ -52,15 +53,15 @@ const Header = () => {
         }
 
         {
-          !user
+          !username
             ? <div
                 className="header__signup"
                 onClick={() => setVisibleSignup(true)}
               >
                 Sign Up
               </div>
-            : <Popover content={popoverContent(user.username)} placement="left">
-              <Link to={`${user.username}`}>
+            : <Popover content={popoverContent(username)} placement="left">
+              <Link to={`${username}`}>
                 <div className='header__profile'>
                   <img alt='profile' src={userIcon}/>
                 </div>

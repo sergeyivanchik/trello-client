@@ -32,6 +32,7 @@ export const logOut = () => {
         description: 'You have successfully logged out!'
       }));
       dispatch(logOutSuccess());
+      localStorage.clear();
     } catch (error) {
       dispatch(logOutFailure());
       dispatch(showSnackbar({
@@ -84,6 +85,9 @@ export const logInAsync = userInfo => {
       const { token, id, username, email } = data;
       if (token) {
         localStorage.setItem('token', token);
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        localStorage.setItem('user_id', id);
         dispatch(logInSuccess({ id, username, email }));
         dispatch(showSnackbar({
           type: 'success',
