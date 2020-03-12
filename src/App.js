@@ -8,6 +8,7 @@ import MainPage from '../src/components/MainPage';
 import CurrentBoard from '../src/components/CurrentBoard';
 import Header from '../src/components/Header';
 import Snackbar from './components/Snackbar';
+import Profile from './components/Profile';
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={MainPage}/>
             <Route exact path="/board/:boardId" component={CurrentBoard}/>
+            <Route exact path="/:user" component={Profile}/>
           </Switch>
         </div>
       </Router>

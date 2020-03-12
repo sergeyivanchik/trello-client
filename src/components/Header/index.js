@@ -61,7 +61,7 @@ const Header = () => {
                 Sign Up
               </div>
             : <Popover content={popoverContent(username)} placement="left">
-              <Link to={`${username}`}>
+              <Link to={`/${username}`}>
                 <div className='header__profile'>
                   <img alt='profile' src={userIcon}/>
                 </div>

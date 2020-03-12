@@ -9,7 +9,7 @@ import closeIcon from './icons/close.svg';
 import { addBoardAsync } from '../../../store/actions/boards';
 
 
-const CreateButton = ({ boards }) => {
+const CreateButton = ({ boards, setCreateClick }) => {
   const [click, setClick] = useState(false);
   const [closeButtonClick, setCloseButtonClick] = useState(false);
   const [text, setText] = useState('');
@@ -45,14 +45,15 @@ const CreateButton = ({ boards }) => {
   };
 
   const handleCreateClick = () => {
-    if (text) {
+    if (text && currentUser) {
       if (boards) {
-        dispatch(addBoardAsync(text));
+        dispatch(addBoardAsync({ title: text, user: currentUser.id }));
       } else {
-        dispatch(addBoardAsync(text));
+        dispatch(addBoardAsync({ title: text, user: currentUser.id }));
       };
       setText('');
       setCloseButtonClick(true);
+      setCreateClick(true);
     } else {
       setEmptyInput(true);
     };

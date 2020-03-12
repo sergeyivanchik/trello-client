@@ -1,0 +1,25 @@
+.tasks {
+  background-color: white;
+  height: calc(100vh - 270px);
+
+  &__delete-icon {
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.ant-pagination-item-active a {
+  color: #9fe7a4;
+}
+
+.ant-pagination-item-active {
+  border-color: #9fe7a4;
+}
+
+.ant-table-thead > tr > th {
+  background: white;
+}

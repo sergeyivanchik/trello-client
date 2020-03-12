@@ -1,0 +1,48 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+
+    span:nth-child(2) {
+      font-size: 40px;
+      font-weight: bold;
+      margin: 0 20px;
+    }
+
+    span:nth-child(3) {
+      font-size: 17px;
+      font-style: italic;
+      margin-top: 8px;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #9fe7a4;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+.ant-tabs-bar {
+  margin: 0;
+}
+
+.ant-tabs-tab {
+  font-size: 20px;
+}

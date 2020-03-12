@@ -66,11 +66,11 @@ export const addBoardFailure = error => ({
   payload: error
 });
 
-export const addBoardAsync = title => {
+export const addBoardAsync = newBoard => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`boards`, 
-        { title }
+        newBoard
       );
       dispatch(addBoardSuccess(data));
     }
