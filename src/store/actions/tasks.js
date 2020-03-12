@@ -13,6 +13,8 @@ import {
   DLETE_TASK_FAILURE
 } from '../constants/tasks';
 
+import { showSnackbar } from './snackbar';
+
 
 export const deleteTaskSuccess = task => ({
   type: DLETE_TASK_SUCCESS,
@@ -29,9 +31,19 @@ export const deleteTaskAsync = id => {
     try {
       const { data } = await axios.delete(`tasks/${id}`);
       dispatch(deleteTaskSuccess(data));
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully deleted task!'
+      }));
     }
     catch (error) {
       dispatch(deleteTaskFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 };

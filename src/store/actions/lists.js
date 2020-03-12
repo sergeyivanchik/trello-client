@@ -11,6 +11,8 @@ import {
   DELETE_LIST_FAILURE
 } from '../constants/lists.js';
 
+import { showSnackbar } from './snackbar';
+
 
 export const deleteListSuccess = list => ({
   type: DELETE_LIST_SUCCESS,
@@ -26,10 +28,20 @@ export const deleteListAsync = id => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`lists/${id}`);
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully deleted list!'
+      }));
       dispatch(deleteListSuccess(data));
     }
     catch (error) {
       dispatch(deleteListFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 }
