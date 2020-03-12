@@ -15,18 +15,14 @@ const Boards = ({ boards, lists, tasks }) => {
   data.map(elem => {
     const currentLists = lists && lists.length && lists.filter(list => list.board === elem.boardId);
 
-    elem.listsCount = currentLists.length;
+    elem.listsCount = currentLists.length || 0;
     elem.currentLists = currentLists;
 
-    if (currentLists && currentLists.length === 0) {
-      elem.tasksCount = 0;
-    } else {
-      const currentTasks = tasks &&
-        tasks.length &&
-        tasks.filter(task => currentLists.find(list => list.id === task.list));
+    const currentTasks = tasks &&
+      tasks.length &&
+      tasks.filter(task => currentLists.find(list => list.id === task.list));
 
-        elem.tasksCount = currentTasks.length;
-    }
+    elem.tasksCount = currentTasks.length || 0;
   });
 
   const columns = [

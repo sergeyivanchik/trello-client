@@ -17,6 +17,7 @@ import { getTasksAsync } from '../../store/actions/tasks';
 
 const Profile = () => {
   const [isDeleteTask, setIsDeleteTask] = useState(false);
+  const [isDeleteList, setIsDeleteList] = useState(false);
 
   const userBoards = useSelector(state => state.boards.userBoards);
   const lists = useSelector(state => state.lists.allLists);
@@ -36,7 +37,8 @@ const Profile = () => {
       dispatch(getTasksAsync());
     };
     setIsDeleteTask(false);
-  }, [dispatch, user_id, isDeleteTask]);
+    setIsDeleteList(false);
+  }, [dispatch, user_id, isDeleteTask, isDeleteList]);
 
   return (
     <div className='profile'>
@@ -54,7 +56,12 @@ const Profile = () => {
             <Boards boards={userBoards} lists={userLists} tasks={userTasks}/>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Lists" key="2">
-            <Lists lists={userLists} tasks={userTasks} boards={userBoards}/>
+            <Lists
+              lists={userLists}
+              tasks={userTasks}
+              boards={userBoards}
+              setIsDeleteList={setIsDeleteList}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Tasks" key="3">
             <Tasks

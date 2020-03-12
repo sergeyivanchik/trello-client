@@ -1,12 +1,17 @@
 import React from 'react';
+import { useDispatch } from  'react-redux';
 
 import './Lists.scss';
 import { Table } from 'antd';
 
 import deleteIcon from '../icons/delete.svg';
 
+import { deleteListAsync } from '../../../store/actions/lists';
 
-const Lists = ({ lists, tasks, boards }) => {
+
+const Lists = ({ lists, tasks, boards, setIsDeleteList }) => {
+  const dispatch = useDispatch();
+
   const data = [];
   lists.forEach(elem => {
     const board = boards && boards.length && boards.find(board => board.id === elem.board);
@@ -17,7 +22,7 @@ const Lists = ({ lists, tasks, boards }) => {
   data.map(elem => {
     const currentTasks = tasks && tasks.length && tasks.filter(task => task.list === elem.listId);
 
-    elem.tasksCount = currentTasks.length;
+    elem.tasksCount = currentTasks.length || 0;
   })
 
   const columns = [
@@ -39,7 +44,16 @@ const Lists = ({ lists, tasks, boards }) => {
     {
       dataIndex: 'listId',
       key: 'listId',
-      render: id => <img className='lists__delete-icon' src={deleteIcon} alt='delete'/>,
+      render: id =>
+        <img
+          className='lists__delete-icon'
+          src={deleteIcon}
+          alt='delete'
+          onClick={() => {
+            setIsDeleteList(true);
+            dispatch(deleteListAsync(id));
+          }}
+        />,
     },
   ];
 
