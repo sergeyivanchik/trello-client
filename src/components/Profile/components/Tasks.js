@@ -68,7 +68,7 @@ const Tasks = ({ tasks, lists, boards, setIsDeleteTask }) => {
       <Table
         columns={columns}
         dataSource={data}
-        rowKey={record => record.title + record.board + record.taskId + record.list}/>
+        rowKey={record => record.title + record.board + record.taskId + record.list}
       />
     </div>
   );

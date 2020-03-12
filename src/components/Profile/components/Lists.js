@@ -48,7 +48,7 @@ const Lists = ({ lists, tasks, boards }) => {
       <Table
         columns={columns}
         dataSource={data}
-        rowKey={record => record.title + record.board + record.tasksCount + record.listId}/>
+        rowKey={record => record.title + record.board + record.tasksCount + record.listId}
       />
     </div>
   );
