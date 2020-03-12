@@ -1,12 +1,17 @@
 import React from 'react';
+import { useDispatch } from  'react-redux';
 
 import './Tasks.scss';
 import { Table } from 'antd';
 
 import deleteIcon from '../icons/delete.svg';
 
+import { deleteTaskAsync } from '../../../store/actions/tasks';
+
 
 const Tasks = ({ tasks, lists, boards }) => {
+  const dispatch = useDispatch();
+
   const data = [];
   tasks.map(elem => {
     const list = lists && lists.length && lists.find(list => list.id === elem.list);
@@ -45,7 +50,13 @@ const Tasks = ({ tasks, lists, boards }) => {
     {
       dataIndex: 'taskId',
       key: 'taskId',
-      render: id => <img className='tasks__delete-icon' src={deleteIcon} alt='delete'/>,
+      render: id =>
+        <img
+          className='tasks__delete-icon'
+          src={deleteIcon}
+          alt='delete'
+          onClick={() => dispatch(deleteTaskAsync(id))}
+        />,
     },
   ];
 
