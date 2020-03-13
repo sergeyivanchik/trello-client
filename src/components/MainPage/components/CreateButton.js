@@ -114,6 +114,7 @@ const CreateButton = ({ boards, setCreateClick }) => {
                   }}
                   onFocus={() => setIsRef(true)}
                   ref={isRef ? inputRef : null}
+                  autoFocus={true}
                 />
 
                 {

@@ -80,6 +80,7 @@ const AddButton = ({ boardId, setIsAddList }) => {
                 onFocus={() => setIsRef(true)}
                 placeholder='add a list'
                 ref={isRef ? inputRef : null}
+                autoFocus={true}
               />
 
               <img
