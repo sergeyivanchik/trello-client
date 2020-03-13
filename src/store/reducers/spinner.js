@@ -2,7 +2,7 @@ import { SHOW_SPINNER, HIDE_SPINNER } from '../constants/spinner';
 
 
 const initialState = {
-  isLoading: true
+  isLoading: false
 }
 
 export default function spinner(state = initialState, action) {

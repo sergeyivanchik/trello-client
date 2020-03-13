@@ -15,8 +15,8 @@ const MainPage = () => {
   const [userBoards, setUserBoards] = useState([]);
   const [createClick, setCreateClick] = useState(false);
 
-  const userId = localStorage.getItem('user_id');
-  const username = localStorage.getItem('username');
+  const userId = localStorage.getItem('user_id') || null;
+  const username = localStorage.getItem('username') || null;
 
   const isLoadingData = useSelector(state => state.spinner.isLoading);
   const boards = useSelector(state => state.boards.userBoards);
