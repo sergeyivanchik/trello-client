@@ -13,7 +13,8 @@ import {
   DELETE_BOARD_FAILURE
 } from '../constants/boards.js';
 
-import { showSpinner, hideSpinner } from '../actions/spinner';
+import { showSpinner, hideSpinner } from './spinner';
+import { showSnackbar } from './snackbar';
 
 
 export const deleteBoardSuccess = board => ({
@@ -30,10 +31,20 @@ export const deleteBoardAsync = id => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`boards/${id}`);
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully deleted list!'
+      }));
       dispatch(deleteBoardSuccess(data));
     }
     catch (error) {
-      dispatch(deleteBoardFailure(error))
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
+      dispatch(deleteBoardFailure(error));
     }
   }
 };
