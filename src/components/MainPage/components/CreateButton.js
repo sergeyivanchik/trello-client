@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from  'react-redux';
 
 import './CreateButton.scss';
@@ -15,9 +15,33 @@ const CreateButton = ({ boards, setCreateClick }) => {
   const [text, setText] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
+  const [isRef, setIsRef] = useState(false);
+
+  const inputRef = useRef(null);
 
   const userId = localStorage.getItem('user_id');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const onKeyPress = e => {
+      if (
+        e.keyCode === 13 &&
+        inputRef &&
+        inputRef.current
+      ) {
+        if (text && text.length) {
+          handleCreateClick();
+        }
+        setText('');
+      };
+    };
+
+    document.addEventListener('keydown', onKeyPress);
+  
+    return () => {
+      document.removeEventListener('keydown', onKeyPress);
+    };
+  });
 
   useEffect(() => {
     if (closeButtonClick || cancelClick) {
@@ -84,7 +108,12 @@ const CreateButton = ({ boards, setCreateClick }) => {
                   size="large"
                   value={text}
                   onChange={handleChange}
-                  onBlur={() => !text && setEmptyInput(true)}
+                  onBlur={() => {
+                    !text && setEmptyInput(true);
+                    setIsRef(false);
+                  }}
+                  onFocus={() => setIsRef(true)}
+                  ref={isRef ? inputRef : null}
                 />
 
                 {
