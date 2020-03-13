@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from  'react-redux';
+import { useDispatch } from  'react-redux';
 
 import './CreateButton.scss';
 import { Input } from 'antd';
@@ -16,7 +16,7 @@ const CreateButton = ({ boards, setCreateClick }) => {
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
 
-  const currentUser = useSelector(state => state.users.currentUser);
+  const userId = localStorage.getItem('user_id');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,11 +45,11 @@ const CreateButton = ({ boards, setCreateClick }) => {
   };
 
   const handleCreateClick = () => {
-    if (text && currentUser) {
+    if (text && userId) {
       if (boards) {
-        dispatch(addBoardAsync({ title: text, user: currentUser.id }));
+        dispatch(addBoardAsync({ title: text, user: userId }));
       } else {
-        dispatch(addBoardAsync({ title: text, user: currentUser.id }));
+        dispatch(addBoardAsync({ title: text, user: userId }));
       };
       setText('');
       setCloseButtonClick(true);
@@ -62,9 +62,9 @@ const CreateButton = ({ boards, setCreateClick }) => {
   return (
     <div
       className={
-        `create-button ${click ? 'create-button_open' : ''} ${!currentUser ? 'create-button_inactive' : ''}`
+        `create-button ${click ? 'create-button_open' : ''} ${!userId ? 'create-button_inactive' : ''}`
       }
-      onClick={() => currentUser && setClick(true)}
+      onClick={() => userId && setClick(true)}
     >
       {
         !click
