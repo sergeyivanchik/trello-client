@@ -8,11 +8,35 @@ import {
   GET_BOARD_BY_ID_SUCCESS,
   GET_BOARD_BY_ID_FAILURE,
   GET_BOARDS_BY_USER_SUCCESS,
-  GET_BOARDS_BY_USER_FAILURE
+  GET_BOARDS_BY_USER_FAILURE,
+  DELETE_BOARD_SUCCESS,
+  DELETE_BOARD_FAILURE
 } from '../constants/boards.js';
 
 import { showSpinner, hideSpinner } from '../actions/spinner';
 
+
+export const deleteBoardSuccess = board => ({
+  type: DELETE_BOARD_SUCCESS,
+  payload: board
+});
+
+export const deleteBoardFailure = error => ({
+  type: DELETE_BOARD_FAILURE,
+  payload: error
+});
+
+export const deleteBoardAsync = id => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`boards/${id}`);
+      dispatch(deleteBoardSuccess(data));
+    }
+    catch (error) {
+      dispatch(deleteBoardFailure(error))
+    }
+  }
+};
 
 export const getBoardsByUserSuccess = boards => ({
   type: GET_BOARDS_BY_USER_SUCCESS,
@@ -33,10 +57,10 @@ export const getBoardsByUserAsync = userId => {
       dispatch(hideSpinner());
     }
     catch (error) {
-      dispatch(getBoardsByUserFailure(error))
+      dispatch(getBoardsByUserFailure(error));
     }
   }
-}
+};
 
 export const getBoardsSuccess = boards => ({
   type: GET_BOARDS_SUCCESS,
@@ -52,10 +76,10 @@ export const getBoardsAsync = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get('boards');
-      dispatch(getBoardsSuccess(data))
+      dispatch(getBoardsSuccess(data));
     }
     catch (error) {
-      dispatch(getBoardsFailure(error))
+      dispatch(getBoardsFailure(error));
     }
   }
 };

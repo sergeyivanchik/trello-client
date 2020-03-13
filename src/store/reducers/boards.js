@@ -6,7 +6,9 @@ import {
   GET_BOARD_BY_ID_SUCCESS,
   GET_BOARD_BY_ID_FAILURE,
   GET_BOARDS_BY_USER_SUCCESS,
-  GET_BOARDS_BY_USER_FAILURE
+  GET_BOARDS_BY_USER_FAILURE,
+  DELETE_BOARD_SUCCESS,
+  DELETE_BOARD_FAILURE
 } from '../constants/boards.js';
 
 
@@ -14,6 +16,7 @@ const initialState = {
   allBoards: [],
   boardById: {},
   userBoards: [],
+  deletedBoard: {},
   error: ''
 }
 
@@ -41,7 +44,13 @@ export default function boards(state = initialState, action) {
         return { ...state, userBoards: action.payload };
   
       case GET_BOARDS_BY_USER_FAILURE: 
-        return { ...state, error: action.payload };  
+        return { ...state, error: action.payload };
+
+      case DELETE_BOARD_SUCCESS:
+        return { ...state, deletedBoard: action.payload };
+  
+      case DELETE_BOARD_FAILURE: 
+        return { ...state, error: action.payload };
 
     default:
       return state;

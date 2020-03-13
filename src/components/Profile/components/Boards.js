@@ -1,12 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import './Boards.scss';
 import { Table } from 'antd';
 
 import deleteIcon from '../icons/delete.svg';
 
+import { deleteBoardAsync } from '../../../store/actions/boards';
 
-const Boards = ({ boards, lists, tasks }) => {
+
+const Boards = ({ boards, lists, tasks, setISDeleteBoard }) => {
+  const dispatch = useDispatch();
+
   const data = [];
   boards.forEach(elem => {
     data.push({ title: elem.title, boardId: elem.id });
@@ -44,7 +49,16 @@ const Boards = ({ boards, lists, tasks }) => {
     {
       dataIndex: 'boardId',
       key: 'boardId',
-      render: id => <img className='boards__delete-icon' src={deleteIcon} alt='delete'/>,
+      render: id =>
+        <img
+          className='boards__delete-icon'
+          src={deleteIcon}
+          alt='delete'
+          onClick={() => {
+            setISDeleteBoard(true);
+            dispatch(deleteBoardAsync(id));
+          }}
+        />,
     },
   ];
 
