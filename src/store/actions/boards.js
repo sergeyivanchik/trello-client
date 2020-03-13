@@ -11,6 +11,8 @@ import {
   GET_BOARDS_BY_USER_FAILURE
 } from '../constants/boards.js';
 
+import { showSpinner, hideSpinner } from '../actions/spinner';
+
 
 export const getBoardsByUserSuccess = boards => ({
   type: GET_BOARDS_BY_USER_SUCCESS,
@@ -25,8 +27,10 @@ export const getBoardsByUserFailure = error => ({
 export const getBoardsByUserAsync = userId => {
   return async (dispatch) => {
     try {
+      dispatch(showSpinner());
       const { data } = await axios.get(`boards/user/${userId}`);
-      dispatch(getBoardsByUserSuccess(data))
+      dispatch(getBoardsByUserSuccess(data));
+      dispatch(hideSpinner());
     }
     catch (error) {
       dispatch(getBoardsByUserFailure(error))
