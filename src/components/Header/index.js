@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from  'react-redux';
+import { useDispatch } from  'react-redux';
 
 import './index.scss'
 import { Popover, Modal } from 'antd';
@@ -9,14 +9,14 @@ import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
 
 import { logOut } from '../../store/actions/users';
-import { getBoardsByUserSuccess } from '../../store/actions/boards';
 
 
 const Header = () => {
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleSignup, setVisibleSignup] = useState(false);
 
-  const user = useSelector(state => state.users.currentUser);
+  const username = localStorage.getItem('username');
+
   const dispatch = useDispatch();
 
   const popoverContent = username => (
@@ -34,34 +34,38 @@ const Header = () => {
       </Link>
 
       <div className="header__auth">
-        <span
-          className="header__login"
-          onClick={() => {
-            if (!user) {
-              setVisibleLogin(true);
-            } else {
-              dispatch(logOut());
-              dispatch(getBoardsByUserSuccess([]));
-            }
-          }}
-        >
-          {
-            user ? 'Log Out' : 'Log In'
-          }
-        </span>
+        {
+          username
+            ? <Link to={`/`}>
+                <span
+                  className="header__login"
+                  onClick={() => dispatch(logOut())}
+                >
+                Log Out
+                </span>
+              </Link>
+            : <span
+                className="header__login"
+                onClick={() => setVisibleLogin(true)}
+              >
+                Log In
+              </span>
+        }
 
         {
-          !user
+          !username
             ? <div
                 className="header__signup"
                 onClick={() => setVisibleSignup(true)}
               >
                 Sign Up
               </div>
-            : <Popover content={popoverContent(user.username)} placement="left">
-              <div className='header__profile'>
-                <img alt='profile' src={userIcon}/>
-              </div>
+            : <Popover content={popoverContent(username)} placement="left">
+              <Link to={`/${username}`}>
+                <div className='header__profile'>
+                  <img alt='profile' src={userIcon}/>
+                </div>
+              </Link>
               </Popover>
         }
 

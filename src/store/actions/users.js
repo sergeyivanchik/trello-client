@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -9,6 +10,8 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE
 } from '../constants/users.js';
+
+import { showSnackbar } from './snackbar';
 
 
 export const logOutSuccess = () => ({
@@ -23,10 +26,20 @@ export const logOutFailure = error => ({
 export const logOut = () => {
   return (dispatch) => {
     try {
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully logged out!'
+      }));
       dispatch(logOutSuccess());
-      dispatch(logInSuccess(''));
+      localStorage.clear();
     } catch (error) {
       dispatch(logOutFailure());
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 };
@@ -69,13 +82,26 @@ export const logInAsync = userInfo => {
   return async dispatch => {
     try {
       const { data } = await axios.post(`users/login`, {...userInfo});
-      const { token, id, username } = data;
+      const { token, id, username, email } = data;
       if (token) {
         localStorage.setItem('token', token);
-        dispatch(logInSuccess({ id, username }));
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        localStorage.setItem('user_id', id);
+        dispatch(logInSuccess({ id, username, email }));
+        dispatch(showSnackbar({
+          type: 'success',
+          message: 'Success',
+          description: 'You have successfully logged in!'
+        }));
       } else console.log('token not found');
     } catch (error) {
       dispatch(logInFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Please, enter correct data!'
+      }));
     };
   }
 };
@@ -95,9 +121,19 @@ export const signUpAsync = userInfo => {
       const { data } = await axios.post(`users/signup`, {...userInfo});
       if (data) {
         dispatch(signUpSuccess());
+        dispatch(showSnackbar({
+          type: 'success',
+          message: 'Success',
+          description: 'You have successfully signed up!'
+        }));
       } else console.log('SignUp error!');
     } catch (error) {
       dispatch(signUpFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
     }
   }
 };

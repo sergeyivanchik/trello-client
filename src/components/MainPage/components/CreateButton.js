@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from  'react-redux';
 
 import './CreateButton.scss';
@@ -9,14 +9,39 @@ import closeIcon from './icons/close.svg';
 import { addBoardAsync } from '../../../store/actions/boards';
 
 
-const CreateButton = ({ boards }) => {
+const CreateButton = ({ boards, setCreateClick }) => {
   const [click, setClick] = useState(false);
   const [closeButtonClick, setCloseButtonClick] = useState(false);
   const [text, setText] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
   const [cancelClick, setCancelClick] = useState(false);
+  const [isRef, setIsRef] = useState(false);
 
+  const inputRef = useRef(null);
+
+  const userId = localStorage.getItem('user_id');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const onKeyPress = e => {
+      if (
+        e.keyCode === 13 &&
+        inputRef &&
+        inputRef.current
+      ) {
+        if (text && text.length) {
+          handleCreateClick();
+        }
+        setText('');
+      };
+    };
+
+    document.addEventListener('keydown', onKeyPress);
+  
+    return () => {
+      document.removeEventListener('keydown', onKeyPress);
+    };
+  });
 
   useEffect(() => {
     if (closeButtonClick || cancelClick) {
@@ -44,14 +69,15 @@ const CreateButton = ({ boards }) => {
   };
 
   const handleCreateClick = () => {
-    if (text) {
+    if (text && userId) {
       if (boards) {
-        dispatch(addBoardAsync(text));
+        dispatch(addBoardAsync({ title: text, user: userId }));
       } else {
-        dispatch(addBoardAsync(text));
+        dispatch(addBoardAsync({ title: text, user: userId }));
       };
       setText('');
       setCloseButtonClick(true);
+      setCreateClick(true);
     } else {
       setEmptyInput(true);
     };
@@ -59,8 +85,10 @@ const CreateButton = ({ boards }) => {
 
   return (
     <div
-      className={`create-button ${click ? 'create-button_open' : ''}`}
-      onClick={() => setClick(true)}
+      className={
+        `create-button ${click ? 'create-button_open' : ''} ${!userId ? 'create-button_inactive' : ''}`
+      }
+      onClick={() => userId && setClick(true)}
     >
       {
         !click
@@ -80,7 +108,13 @@ const CreateButton = ({ boards }) => {
                   size="large"
                   value={text}
                   onChange={handleChange}
-                  onBlur={() => !text && setEmptyInput(true)}
+                  onBlur={() => {
+                    !text && setEmptyInput(true);
+                    setIsRef(false);
+                  }}
+                  onFocus={() => setIsRef(true)}
+                  ref={isRef ? inputRef : null}
+                  autoFocus={true}
                 />
 
                 {

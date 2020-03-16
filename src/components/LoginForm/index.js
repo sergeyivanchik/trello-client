@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from  'react-redux';
 import './index.scss'
 
 import { logInAsync } from '../../store/actions/users';
+import { showSnackbar } from '../../store/actions/snackbar';
 
 
 const LoginForm = ({ setVisible, visible }) => {
@@ -12,6 +13,27 @@ const LoginForm = ({ setVisible, visible }) => {
 
   const currentUser = useSelector(state => state.users.currentUser)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const onKeyPress = e => {
+      if (e.keyCode === 13) {
+        if (username && password) {
+          dispatch(logInAsync(
+            {
+              username,
+              password
+            }
+          ));
+        };
+      };
+    };
+
+    document.addEventListener('keypress', onKeyPress);
+  
+    return () => {
+      document.removeEventListener('keypress', onKeyPress);
+    };
+  });
 
   useEffect(() => {
     setPassword('');
@@ -46,7 +68,13 @@ const LoginForm = ({ setVisible, visible }) => {
                   password
                 }
               ));
-            }
+            } else {
+              dispatch(showSnackbar({
+                type: 'error',
+                message: 'Error',
+                description: 'Fill in all the fields!'
+              }));
+            };
           }}
         >
           login

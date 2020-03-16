@@ -6,13 +6,16 @@ import {
   GET_TASKS_BY_LIST_SUCCESS,
   GET_TASKS_BY_LIST_FAILURE,
   CHANGE_TASK_SUCCESS,
-  CHANGE_TASK_FAILURE
+  CHANGE_TASK_FAILURE,
+  DLETE_TASK_SUCCESS,
+  DLETE_TASK_FAILURE
 } from '../constants/tasks';
 
 
 const initialState = {
   allTasks: [],
   tasksByList: [],
+  deleteTask: {},
   error: ''
 }
 
@@ -41,6 +44,12 @@ export default function tasks(state = initialState, action) {
 
     case CHANGE_TASK_FAILURE: 
       return { ...state, error: action.payload };
+
+    case DLETE_TASK_SUCCESS:
+      return { ...state, deleteTask: action.payload };
+
+    case DLETE_TASK_FAILURE: 
+      return { ...state, error: action.payload };  
       
     default:
       return state;

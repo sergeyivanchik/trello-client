@@ -6,46 +6,58 @@ import './index.scss';
 
 import CreateButton from './components/CreateButton';
 import Board from './components/Board';
+import Spinner from '../Spinner';
 
 import { getBoardsByUserAsync } from '../../store/actions/boards';
 
 
 const MainPage = () => {
   const [userBoards, setUserBoards] = useState([]);
+  const [createClick, setCreateClick] = useState(false);
 
-  const user = useSelector(state => state.users.currentUser);
+  const userId = localStorage.getItem('user_id') || null;
+  const username = localStorage.getItem('username') || null;
+
+  const isLoadingData = useSelector(state => state.spinner.isLoading);
   const boards = useSelector(state => state.boards.userBoards);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    user && dispatch(getBoardsByUserAsync(user.id));
-    setUserBoards(boards);
-  }, [user, boards && boards.length]);
+    userId && dispatch(getBoardsByUserAsync(userId));
+    setUserBoards(userId ? boards : []);
+    setCreateClick(false);
+  }, [userId, boards && boards.length, createClick]);
 
   return (
     <div className='main-page'>
-        <div className='main-page__title'>
-          {
-            user
-              ? `${user.username.toUpperCase()} boards`
-              : 'Custom boards'
-          }
-        </div>
+      {
+        isLoadingData
+          ? <Spinner/>
+          : <>
+              <div className='main-page__title'>
+                {
+                  userId
+                    ? `${username.toUpperCase()} boards`
+                    : 'Custom boards'
+                }
+              </div>
+              <div className='main-page__content'>
+                {
+                  userBoards &&
+                  !!userBoards.length &&
+                  userBoards.map(elem =>
+                    <Link to={`/board/${elem.id}`} key={elem.id}>
+                      <Board title={elem.title} key={elem.id}/>
+                    </Link>
+                  )
+                }
+        
+                <CreateButton boards={userBoards} setCreateClick={setCreateClick}/>
+              </div>
+            </>
+      }
 
-        <div className='main-page__content'>
-          {
-            userBoards &&
-            !!userBoards.length &&
-            userBoards.map(elem =>
-              <Link to={`/board/${elem.id}`} key={elem.id}>
-                <Board title={elem.title} key={elem.id}/>
-              </Link>
-            )
-          }
-
-          <CreateButton boards={userBoards}/>
-        </div>
-      </div>
+    </div>
   );
 };
 

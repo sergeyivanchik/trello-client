@@ -8,9 +8,45 @@ import {
   GET_TASKS_BY_LIST_SUCCESS,
   GET_TASKS_BY_LIST_FAILURE,
   CHANGE_TASK_SUCCESS,
-  CHANGE_TASK_FAILURE
+  CHANGE_TASK_FAILURE,
+  DLETE_TASK_SUCCESS,
+  DLETE_TASK_FAILURE
 } from '../constants/tasks';
 
+import { showSnackbar } from './snackbar';
+
+
+export const deleteTaskSuccess = task => ({
+  type: DLETE_TASK_SUCCESS,
+  payload: task
+});
+
+export const deleteTaskFailure = error => ({
+  type: DLETE_TASK_FAILURE,
+  payload: error
+});
+
+export const deleteTaskAsync = id => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`tasks/${id}`);
+      dispatch(deleteTaskSuccess(data));
+      dispatch(showSnackbar({
+        type: 'success',
+        message: 'Success',
+        description: 'You have successfully deleted task!'
+      }));
+    }
+    catch (error) {
+      dispatch(deleteTaskFailure(error));
+      dispatch(showSnackbar({
+        type: 'error',
+        message: 'Error',
+        description: 'Something wrong!'
+      }));
+    }
+  }
+};
 
 export const getTasksSuccess = tasks => ({
   type: GET_TASKS_SUCCESS,
@@ -26,10 +62,10 @@ export const getTasksAsync = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`tasks`);
-      dispatch(getTasksSuccess(data))
+      dispatch(getTasksSuccess(data));
     }
     catch (error) {
-      dispatch(getTasksFailure(error))
+      dispatch(getTasksFailure(error));
     }
   }
 };
@@ -48,10 +84,10 @@ export const addTaskAsync = task => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`tasks`, task);
-      dispatch(addTaskSuccess(data))
+      dispatch(addTaskSuccess(data));
     }
     catch (error) {
-      dispatch(addTaskFailure(error))
+      dispatch(addTaskFailure(error));
     }
   }
 };
@@ -70,10 +106,10 @@ export const getTasksByListAsync = listId => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`tasks/${listId}`);
-      dispatch(getTasksByListSuccess(data))
+      dispatch(getTasksByListSuccess(data));
     }
     catch (error) {
-      dispatch(getTasksByListFailure(error))
+      dispatch(getTasksByListFailure(error));
     }
   }
 };
@@ -94,7 +130,7 @@ export const changeTaskAsync = (id, body) => {
       dispatch(changeTaskSuccess());
     }
     catch (error) {
-      dispatch(changeTaskFailure(error))
+      dispatch(changeTaskFailure(error));
     }
   }
 };
